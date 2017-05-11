@@ -28,6 +28,9 @@ class Vec2:
 	def retTuple(self):
 		return (self.x, self.y)
 
+	def retIntTuple(self):
+		return (int(self.x), int(self.y))
+
 def bezierPoint(t, p0, p1, p2, p3):
 	u = 1-t
 	tt = t*t
@@ -40,7 +43,7 @@ def bezierPoint(t, p0, p1, p2, p3):
 	p += p2.multiply(3*u*tt)
 	p += p3.multiply(ttt)
 
-	return p.retTuple()
+	return p.retIntTuple()
 
 def main():
 	pygame.init()
@@ -69,7 +72,6 @@ def main():
 		count += 1
 
 	print("adding lines done!")
-	print(lines)
 
 	quit = False
 	while not quit:
@@ -78,7 +80,11 @@ def main():
 			if ev.type == QUIT:
 				quit = True
 		screen.blit(bg, (0,0))
-		draw.lines(bg, Color("#000000"), False, lines, 1)
+		# draw.lines(bg, Color("#000000"), False, lines, 1)
+		count = 0
+		while count != iters:
+			draw.circle(bg, Color("#000000"), lines[count], 1)
+			count += 1
 		pygame.display.flip()
 
 	pygame.quit()
