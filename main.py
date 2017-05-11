@@ -63,12 +63,13 @@ def bezierPoint(t, p0, p1, p2, p3):
 	return Rect(p[0], p[1], 1, 1)
 
 def drawAll(screen, bg, iters, dots, p0, p1, p2, p3):
-	screen.fill(Color(BG_COLOR))
-	screen.blit(bg, (0,0))
+	# screen.fill(Color(BG_COLOR))
+	# bg.fill(Color(BG_COLOR))
+	# screen.blit(bg, (0,0))
 	count = 0
 	while count != iters:
 		# draw.circle(bg, Color("#000000"), dots[count], 1)
-		draw.rect(bg, Color("#004400"), dots[count], 10)
+		draw.rect(bg, Color("#000000"), dots[count], 1)
 		count += 1
 	draw.rect(bg, Color("#000000"), p0, 1)
 	draw.rect(bg, Color("#000000"), p1, 1)
@@ -153,23 +154,31 @@ def main():
 					mouse_x, mouse_y = ev.pos
 					p0.x = mouse_x + offset_x
 					p0.y = mouse_y + offset_y
-					count = 0
-					while count != iters:
-						# draw.circle(bg, Color("#000000"), dots[count], 1)
-						draw.rect(bg, Color("#ff0000"), dots[count], 10)
-						count += 1
+					bg.fill(Color(BG_COLOR))
+					drawAll(screen, bg, iters, dots, p0, p1, p2, p3)
+
 				elif mouse_dragging_1:
 					mouse_x, mouse_y = ev.pos
 					p1.x = mouse_x + offset_x
 					p1.y = mouse_y + offset_y
+					bg.fill(Color(BG_COLOR))
+					drawAll(screen, bg, iters, dots, p0, p1, p2, p3)
+
 				elif mouse_dragging_2:
 					mouse_x, mouse_y = ev.pos
 					p2.x = mouse_x + offset_x
 					p2.y = mouse_y + offset_y
+					bg.fill(Color(BG_COLOR))
+					drawAll(screen, bg, iters, dots, p0, p1, p2, p3)
+
 				elif mouse_dragging_3:
 					mouse_x, mouse_y = ev.pos
 					p3.x = mouse_x + offset_x
 					p3.y = mouse_y + offset_y
+					bg.fill(Color(BG_COLOR))
+					drawAll(screen, bg, iters, dots, p0, p1, p2, p3)
+
+
 
 
 		# screen.fill(Color(BG_COLOR))
@@ -183,6 +192,7 @@ def main():
 		# draw.rect(bg, Color("#000000"), p1, 1)
 		# draw.rect(bg, Color("#000000"), p2, 1)
 		# draw.rect(bg, Color("#000000"), p3, 1)
+		screen.blit(bg, (0,0))
 		drawAll(screen, bg, iters, dots, p0, p1, p2, p3)
 		pygame.display.flip()
 
