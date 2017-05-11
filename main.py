@@ -48,7 +48,7 @@ def bezierPoint(t, p0, p1, p2, p3):
 	# p = p0.x * uuu, p0.y * uuu
 	p = []
 	p.append(p0.x * uuu)
-	p.append(p0.x * uuu)
+	p.append(p0.y * uuu)
 
 	# p += p1.x * (3 * uuu * t), p1.y * (3 * uuu * t)
 	p[0] += p1.x * (3 * uuu * t)
@@ -61,6 +61,19 @@ def bezierPoint(t, p0, p1, p2, p3):
 	p[1] += p3.y * ttt
 
 	return Rect(p[0], p[1], 1, 1)
+
+def drawAll(screen, bg, iters, dots, p0, p1, p2, p3):
+	screen.fill(Color(BG_COLOR))
+	screen.blit(bg, (0,0))
+	count = 0
+	while count != iters:
+		# draw.circle(bg, Color("#000000"), dots[count], 1)
+		draw.rect(bg, Color("#004400"), dots[count], 10)
+		count += 1
+	draw.rect(bg, Color("#000000"), p0, 1)
+	draw.rect(bg, Color("#000000"), p1, 1)
+	draw.rect(bg, Color("#000000"), p2, 1)
+	draw.rect(bg, Color("#000000"), p3, 1)
 
 def main():
 	pygame.init()
@@ -80,7 +93,10 @@ def main():
 	p += (2, 2)
 	print(p)
 
-	mouse_dragging = False
+	mouse_dragging_0 = False
+	mouse_dragging_1 = False
+	mouse_dragging_2 = False
+	mouse_dragging_3 = False
 	quit = False
 	display.update()
 	while not quit:
@@ -98,38 +114,76 @@ def main():
 			dots.append(temp)
 			count += 1
 
-		clock.tick(120)
+		clock.tick(60)
 		for ev in pygame.event.get():
 			if ev.type == QUIT:
 				quit = True
 			elif ev.type == MOUSEBUTTONDOWN:
 				if ev.button == 1:
 					if p0.collidepoint(ev.pos):
-						mouse_dragging = 1
+						mouse_dragging_0 = 1
 						mouse_x, mouse_y = ev.pos
 						offset_x = p0.x - mouse_x
 						offset_y = p0.y - mouse_y
+					elif p1.collidepoint(ev.pos):
+						mouse_dragging_1 = 1
+						mouse_x, mouse_y = ev.pos
+						offset_x = p1.x - mouse_x
+						offset_y = p1.y - mouse_y
+					elif p2.collidepoint(ev.pos):
+						mouse_dragging_2 = 1
+						mouse_x, mouse_y = ev.pos
+						offset_x = p2.x - mouse_x
+						offset_y = p2.y - mouse_y
+					elif p3.collidepoint(ev.pos):
+						mouse_dragging_3 = 1
+						mouse_x, mouse_y = ev.pos
+						offset_x = p3.x - mouse_x
+						offset_y = p3.y - mouse_y
 
 			elif ev.type == MOUSEBUTTONUP:
-				mouse_dragging = False
+				mouse_dragging_0 = False
+				mouse_dragging_1 = False
+				mouse_dragging_2 = False
+				mouse_dragging_3 = False
+
 
 			elif ev.type == MOUSEMOTION:
-				if mouse_dragging:
+				if mouse_dragging_0:
 					mouse_x, mouse_y = ev.pos
 					p0.x = mouse_x + offset_x
 					p0.y = mouse_y + offset_y
+					count = 0
+					while count != iters:
+						# draw.circle(bg, Color("#000000"), dots[count], 1)
+						draw.rect(bg, Color("#ff0000"), dots[count], 10)
+						count += 1
+				elif mouse_dragging_1:
+					mouse_x, mouse_y = ev.pos
+					p1.x = mouse_x + offset_x
+					p1.y = mouse_y + offset_y
+				elif mouse_dragging_2:
+					mouse_x, mouse_y = ev.pos
+					p2.x = mouse_x + offset_x
+					p2.y = mouse_y + offset_y
+				elif mouse_dragging_3:
+					mouse_x, mouse_y = ev.pos
+					p3.x = mouse_x + offset_x
+					p3.y = mouse_y + offset_y
 
 
-		screen.blit(bg, (0,0))
-		count = 0
-		while count != iters:
-			# draw.circle(bg, Color("#000000"), dots[count], 1)
-			draw.rect(bg, Color("#000000"), dots[count], 10)
-			count += 1
-		draw.rect(bg, Color("#000000"), p0, 1)
-		draw.rect(bg, Color("#000000"), p1, 1)
-		draw.rect(bg, Color("#000000"), p2, 1)
-		draw.rect(bg, Color("#000000"), p3, 1)
+		# screen.fill(Color(BG_COLOR))
+		# screen.blit(bg, (0,0))
+		# count = 0
+		# while count != iters:
+		# 	# draw.circle(bg, Color("#000000"), dots[count], 1)
+		# 	draw.rect(bg, Color("#004400"), dots[count], 10)
+		# 	count += 1
+		# draw.rect(bg, Color("#000000"), p0, 1)
+		# draw.rect(bg, Color("#000000"), p1, 1)
+		# draw.rect(bg, Color("#000000"), p2, 1)
+		# draw.rect(bg, Color("#000000"), p3, 1)
+		drawAll(screen, bg, iters, dots, p0, p1, p2, p3)
 		pygame.display.flip()
 
 	pygame.quit()
