@@ -1,12 +1,19 @@
-import pygame
+#import pygame
+#from pygame import *
+
+import pygame, sys
 from pygame import *
 
-clock = time.Clock()
 
 WIN_H = 800
 WIN_W = 600
 DISPLAY = (WIN_H, WIN_W)
 BG_COLOR = "#004400"
+
+clock = pygame.time.Clock()
+screen = pygame.display.set_mode(DISPLAY)
+
+
 
 # class Vec2:
 # 	x = 0
@@ -68,20 +75,23 @@ def drawAll(screen, bg, iters, dots, p0, p1, p2, p3):
 	# screen.blit(bg, (0,0))
 	count = 0
 	while count != iters:
-		# draw.circle(bg, Color("#000000"), dots[count], 1)
-		draw.rect(bg, Color("#000000"), dots[count], 1)
+		# draw.circle(bg, Color("#FFFFFF"), dots[count], 1)
+		draw.rect(bg, Color("#FFFFFF"), dots[count], 1)
 		count += 1
-	draw.rect(bg, Color("#000000"), p0, 1)
-	draw.rect(bg, Color("#000000"), p1, 1)
-	draw.rect(bg, Color("#000000"), p2, 1)
-	draw.rect(bg, Color("#000000"), p3, 1)
+	draw.rect(bg, Color("#FFFFFF"), p0, 1)
+	draw.rect(bg, Color("#FFFFFF"), p1, 1)
+	draw.rect(bg, Color("#FFFFFF"), p2, 1)
+	draw.rect(bg, Color("#FFFFFF"), p3, 1)
 
 def main():
 	pygame.init()
-	screen = pygame.display.set_mode(DISPLAY)
+#	screen = pygame.display.set_mode(DISPLAY)
 	pygame.display.set_caption("Bezier")
-	bg = Surface(DISPLAY)
-	bg.fill(Color(BG_COLOR))
+	#bg = Surface(DISPLAY)
+	#bg.fill(Color(BG_COLOR))
+	bg = pygame.image.load("bg.jpg").convert()
+	bg = pygame.transform.scale(bg,DISPLAY)
+	clock.tick(60)
 
 	p0 = Rect(0,0, 10, 10)
 	p1 = Rect(0, 400, 10, 10)
@@ -101,6 +111,8 @@ def main():
 	quit = False
 	display.update()
 	while not quit:
+		
+		screen.blit(bg, (0,0))
 		dots = []
 
 		done = False
@@ -115,7 +127,7 @@ def main():
 			dots.append(temp)
 			count += 1
 
-		clock.tick(60)
+		
 		for ev in pygame.event.get():
 			if ev.type == QUIT:
 				quit = True
@@ -154,28 +166,28 @@ def main():
 					mouse_x, mouse_y = ev.pos
 					p0.x = mouse_x + offset_x
 					p0.y = mouse_y + offset_y
-					bg.fill(Color(BG_COLOR))
+					#bg.fill(Color(BG_COLOR))
 					drawAll(screen, bg, iters, dots, p0, p1, p2, p3)
 
 				elif mouse_dragging_1:
 					mouse_x, mouse_y = ev.pos
 					p1.x = mouse_x + offset_x
 					p1.y = mouse_y + offset_y
-					bg.fill(Color(BG_COLOR))
+					#bg.fill(Color(BG_COLOR))
 					drawAll(screen, bg, iters, dots, p0, p1, p2, p3)
 
 				elif mouse_dragging_2:
 					mouse_x, mouse_y = ev.pos
 					p2.x = mouse_x + offset_x
 					p2.y = mouse_y + offset_y
-					bg.fill(Color(BG_COLOR))
+					#bg.fill(Color(BG_COLOR))
 					drawAll(screen, bg, iters, dots, p0, p1, p2, p3)
 
 				elif mouse_dragging_3:
 					mouse_x, mouse_y = ev.pos
 					p3.x = mouse_x + offset_x
 					p3.y = mouse_y + offset_y
-					bg.fill(Color(BG_COLOR))
+					#bg.fill(Color(BG_COLOR))
 					drawAll(screen, bg, iters, dots, p0, p1, p2, p3)
 
 
@@ -185,14 +197,13 @@ def main():
 		# screen.blit(bg, (0,0))
 		# count = 0
 		# while count != iters:
-		# 	# draw.circle(bg, Color("#000000"), dots[count], 1)
+		# 	# draw.circle(bg, Color("#FFFFFF"), dots[count], 1)
 		# 	draw.rect(bg, Color("#004400"), dots[count], 10)
 		# 	count += 1
-		# draw.rect(bg, Color("#000000"), p0, 1)
-		# draw.rect(bg, Color("#000000"), p1, 1)
-		# draw.rect(bg, Color("#000000"), p2, 1)
-		# draw.rect(bg, Color("#000000"), p3, 1)
-		screen.blit(bg, (0,0))
+		# draw.rect(bg, Color("#FFFFFF"), p0, 1)
+		# draw.rect(bg, Color("#FFFFFF"), p1, 1)
+		# draw.rect(bg, Color("#FFFFFF"), p2, 1)
+		# draw.rect(bg, Color("#FFFFFF"), p3, 1)
 		drawAll(screen, bg, iters, dots, p0, p1, p2, p3)
 		pygame.display.flip()
 
