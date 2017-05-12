@@ -166,7 +166,7 @@ def main():
 					mouse_x, mouse_y = ev.pos
 					p0.x = mouse_x + offset_x
 					p0.y = mouse_y + offset_y
-					#bg.fill(Color(BG_COLOR))
+					bg.fill(Color(BG_COLOR))
 					drawAll(screen, bg, iters, dots, p0, p1, p2, p3)
 
 				elif mouse_dragging_1:
