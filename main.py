@@ -6,7 +6,7 @@ clock = time.Clock()
 WIN_H = 800
 WIN_W = 600
 DISPLAY = (WIN_H, WIN_W)
-BG_COLOR = "#004400"
+BG_COLOR = "#FFFFFF"
 
 # class Vec2:
 # 	x = 0
