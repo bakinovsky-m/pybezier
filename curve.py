@@ -1,3 +1,4 @@
+import pygame
 from dot import Dot
 
 class Curve:
@@ -5,7 +6,26 @@ class Curve:
 	base_dots = []
 	dots = []
 
-	# def bezierPoint(self, t, base_dots):
+	def __init__(self, base):
+		for dot in base:
+			self.base_dots.append(dot)
+			dot.owner = self
+
+		count = 0
+
+		while count != self.dots_count:
+			temp = self.bezierPoint(count/self.dots_count)
+			self.dots.append(temp)
+			count += 1
+	
+	def draw(self, bg):
+		for bdot in self.base_dots:
+			pygame.draw.rect(bg, pygame.Color("#000000"), bdot.rect, 1)
+
+		for dot in self.dots:
+			pygame.draw.rect(bg, pygame.Color("#000000"), dot.rect, 1)
+
+
 	def bezierPoint(self, t):
 		u = 1-t
 		tt = t*t
@@ -26,16 +46,4 @@ class Curve:
 		p[0] += self.base_dots[3].x * ttt
 		p[1] += self.base_dots[3].y * ttt
 
-		# return Rect(p[0], p[1], 1, 1)
 		return Dot(p[0], p[1], False, self)
-
-	def __init__(self, base):
-		for dot in base:
-			self.base_dots.append(dot)
-
-		count = 0
-
-		while count != self.dots_count:
-			temp = self.bezierPoint(count)
-			self.dots.append(temp)
-			count += 1
