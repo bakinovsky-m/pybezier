@@ -40,11 +40,11 @@ def main():
 	while not done:
 		# bg.fill(BG_COLOR)
 		clock.tick(FPS)
-		screen.blit(bg, (0,0))
+		# screen.blit(bg, (0,0))
 		for ev in pygame.event.get():
 			if ev.type == pygame.QUIT:
 				done = True
-			if ev.type == pygame.KEYDOWN:
+			elif ev.type == pygame.KEYDOWN:
 				if ev.key == pygame.K_q:
 					done = True
 				elif ev.key == pygame.K_SPACE:
@@ -59,7 +59,11 @@ def main():
 				temp_dot = Dot(mouse_x, mouse_y, True, [])
 				base_dots.append(temp_dot)
 				if len(base_dots) > 1:
-					b = [base_dots[-2], base_dots[-2], base_dots[-1], base_dots[-1]]
+					rychag1 = Dot(base_dots[-2].x + 10, base_dots[-2].y - 10, True, base_dots[-2].owners)
+					rychag2 = Dot(base_dots[-1].x + 10, base_dots[-1].y - 10, True, base_dots[-1].owners)
+					# b = [base_dots[-2], base_dots[-2], base_dots[-1], base_dots[-1]]
+					b = [base_dots[-2], rychag1, base_dots[-1], rychag2]
+					# b = [rychag1, base_dots[-2], rychag2, base_dots[-1]]
 					temp_curve = Curve(b)
 					curves.append(temp_curve)
 
@@ -75,28 +79,27 @@ def main():
 									offset_x = base_dot.rect.x - mouse_x
 									offset_y = base_dot.rect.y - mouse_y
 									dragged_dot = base_dot
+
 				elif ev.type == pygame.MOUSEBUTTONUP:
 					mouse_dragging = False
 
 				elif ev.type == pygame.MOUSEMOTION:
 					if mouse_dragging:
 						mouse_x, mouse_y = ev.pos
-						# for curve in curves:
-						# 	for base_dot in curve.base_dots:
-						# 		# mouse_dragging = True
-						# 		base_dot.rect.x = mouse_x + offset_x
-						# 		base_dot.x = mouse_x + offset_x
-						# 		base_dot.rect.y = mouse_y + offset_y
-						# 		base_dot.y = mouse_y + offset_y
-							# curve.update()
-						dragged_dot.rect.x = mouse_x + offset_x
 						dragged_dot.x = mouse_x + offset_x
-						dragged_dot.rect.y = mouse_y + offset_y
 						dragged_dot.y = mouse_y + offset_y
+
+
+		## fill with bg_color, THEN draw on bg and then BLIT bg on screen. works fine
+		bg.fill(BG_COLOR)
 
 		for c in curves:
 			c.update()
 			c.draw(bg)
+
+		screen.blit(bg, (0,0))
+		##
+		
 		pygame.display.update()
 
 	pygame.quit()

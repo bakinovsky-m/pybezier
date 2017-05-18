@@ -2,12 +2,8 @@ import pygame
 from dot import Dot
 
 class Curve:
-	# dots_count = 100
-	# base_dots = []
-	# dots = []
-
 	def __init__(self, base):
-		self.dots_count = 100
+		self.dots_count = 1000
 		self.base_dots = []
 		self.dots = []
 		for dot in base:
@@ -22,6 +18,8 @@ class Curve:
 			count += 1
 	
 	def update(self):
+		for base_dot in self.base_dots:
+			base_dot.update()
 		count = 0
 		self.dots[:] = []
 		while count != self.dots_count:
@@ -39,7 +37,6 @@ class Curve:
 	def __str__(self):
 		res = ""
 		for dot in self.base_dots:
-			# print(dot)
 			res += str(dot)
 			res += str('\n')
 		return res
