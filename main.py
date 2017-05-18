@@ -20,6 +20,11 @@ def main():
 	pygame.display.set_caption("Bezier")
 	bg = pygame.Surface(DISPLAY)
 	mouse_dragging = False
+
+	# initialize font; must be called after 'pygame.init()' to avoid 'Font not Initialized' error
+	font = pygame.font.SysFont("monospace", 12)
+	# render text
+	text_label = font.render("q: quit; c: clear; f: finalize; u: undo; n: new cycle", 1, (0,0,0))
 	##
 
 	bg.fill(BG_COLOR)
@@ -133,7 +138,7 @@ def main():
 						if dragging == "base":
 							for dragged_curve in dragged_curves:
 								ind = dragged_curve.base_dots.index(dragged_dot)
-								
+
 								l = dragged_curve.levers[ind]
 								l.x = l.x - (temp_x - dragged_dot.x)
 								l.y = l.y - (temp_y - dragged_dot.y)
@@ -148,6 +153,7 @@ def main():
 			c.draw(bg)
 
 		screen.blit(bg, (0,0))
+		screen.blit(text_label, (0, 0))
 		##
 
 		pygame.display.update()
