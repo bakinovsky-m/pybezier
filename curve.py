@@ -53,8 +53,8 @@ class Curve:
 		p.append(self.base_dots[0].x * uuu)
 		p.append(self.base_dots[0].y * uuu)
 
-		p[0] += self.base_dots[1].x * (3 * uuu * t)
-		p[1] += self.base_dots[1].y * (3 * uuu * t)
+		p[0] += self.base_dots[1].x * (3 * uu * t)
+		p[1] += self.base_dots[1].y * (3 * uu * t)
 
 		p[0] += self.base_dots[2].x * (3 * u * tt)
 		p[1] += self.base_dots[2].y * (3 * u * tt)
