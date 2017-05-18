@@ -13,13 +13,6 @@ FPS = 30
 ##
 
 def main():
-	# a = Dot(100, 100, True, 0)
-	# b = Dot(1, 400, True, 0)
-	# c = Dot(400, 400, True, 0)
-	# d = Dot(400, 1, True, 0)
-
-	# curve = Curve((a,b,c,d))
-
 	## some init
 	pygame.init()
 	clock = pygame.time.Clock()
@@ -38,13 +31,12 @@ def main():
 	dragged_dot = 0
 	dragged_curves = []
 	dragging = 0
-	index_of_first_curve_in_cycle = -1
+	index_of_first_curve_in_cycle = 0
 
 	done = False
 	while not done:
-		# bg.fill(BG_COLOR)
 		clock.tick(FPS)
-		# screen.blit(bg, (0,0))
+		
 		for ev in pygame.event.get():
 			if ev.type == pygame.QUIT:
 				done = True
@@ -66,6 +58,7 @@ def main():
 				elif ev.key == pygame.K_c:
 					base_dots = []
 					curves = []
+					index_of_first_curve_in_cycle = 0
 				# elif ev.key == pygame.K_d:
 				# 	curves.pop()
 				elif ev.key == pygame.K_n:
