@@ -45,7 +45,9 @@ def main():
 			if ev.type == pygame.QUIT:
 				done = True
 			if ev.type == pygame.KEYDOWN:
-				if ev.key == pygame.K_SPACE:
+				if ev.key == pygame.K_q:
+					done = True
+				elif ev.key == pygame.K_SPACE:
 					if mode == 0:
 						mode = 1
 					elif mode == 1:
