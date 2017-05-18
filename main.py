@@ -38,6 +38,7 @@ def main():
 	dragged_dot = 0
 	dragged_curves = []
 	dragging = 0
+	index_of_first_curve_in_cycle = -1
 
 	done = False
 	while not done:
@@ -57,7 +58,7 @@ def main():
 						mode = 0
 				elif ev.key == pygame.K_f:
 					b1 = curves[-1].base_dots[-1]
-					b2 = curves[0].base_dots[0]
+					b2 = curves[index_of_first_curve_in_cycle].base_dots[0]
 					lever1 = Dot(b1.x + 10, b1.y + 10, "lever", [])
 					lever2 = Dot(b2.x + 10, b2.y + 10, "lever", [])
 					temp_curve = Curve([b1, lever1, lever2, b2])
@@ -65,6 +66,11 @@ def main():
 				elif ev.key == pygame.K_c:
 					base_dots = []
 					curves = []
+				# elif ev.key == pygame.K_d:
+				# 	curves.pop()
+				elif ev.key == pygame.K_n:
+					index_of_first_curve_in_cycle  = len(curves)
+					base_dots = []
 
 			## adding mode
 			if ev.type == pygame.MOUSEBUTTONDOWN and mode == 0:
@@ -76,7 +82,6 @@ def main():
 				base_dots.append(temp_dot)
 				if len(base_dots) > 1:
 					lever_dot1 = Dot(base_dots[-2].x + 10, base_dots[-2].y + 10, "lever", base_dots[-1].owners)
-					# lever_dot1 = Dot(base_dots[-2].x + lever1_offset_x, base_dots[-2].y + lever1_offset_y, True, base_dots[-1].owners)
 					base_dots.insert(-1, lever_dot1)
 					lever_dot2 = Dot(temp_dot.x + 10, temp_dot.y + 10, "lever", base_dots[-1].owners)
 					base_dots.insert(-1, lever_dot2)
@@ -149,17 +154,3 @@ def main():
 
 if __name__ == "__main__":
 	main()
-
-# def triangle_problem(a, b):
-# 	ax = a[0]
-# 	ay = a[1]
-
-# 	bx = b[0]
-# 	by = b[1]
-
-# 	ab = sqrt((ax - bx)**2 + (ay - by)**2)
-# 	bc = 10
-
-# 	c = []
-
-# 	return c
