@@ -1,4 +1,5 @@
 import pygame
+import math
 from dot import Dot
 from curve import Curve 
 
@@ -35,6 +36,8 @@ def main():
 	curves = []
 	base_dots = []
 	dragged_dot = 0
+	dragged_curves = []
+	dragging = 0
 
 	done = False
 	while not done:
@@ -56,19 +59,21 @@ def main():
 			## adding mode
 			if ev.type == pygame.MOUSEBUTTONDOWN and mode == 0:
 				mouse_x, mouse_y = ev.pos
-				temp_dot = Dot(mouse_x, mouse_y, True, [])
+				temp_dot = Dot(mouse_x, mouse_y, "base", [])
 
 				## levers inserts between last dot in list (which is fisrt point at all or base point of last curve)
 				## and new base point of current curve
 				base_dots.append(temp_dot)
 				if len(base_dots) > 1:
-					lever_dot1 = Dot(base_dots[-2].x + 10, base_dots[-2].y + 10, True, base_dots[-1].owners)
+					lever_dot1 = Dot(base_dots[-2].x + 10, base_dots[-2].y + 10, "lever", base_dots[-1].owners)
+					# lever_dot1 = Dot(base_dots[-2].x + lever1_offset_x, base_dots[-2].y + lever1_offset_y, True, base_dots[-1].owners)
 					base_dots.insert(-1, lever_dot1)
-					lever_dot2 = Dot(temp_dot.x + 10, temp_dot.y + 10, True, base_dots[-1].owners)
+					lever_dot2 = Dot(temp_dot.x + 10, temp_dot.y + 10, "lever", base_dots[-1].owners)
 					base_dots.insert(-1, lever_dot2)
 					b = [base_dots[-4], base_dots[-3], base_dots[-2], base_dots[-1]]
 					temp_curve = Curve(b)
 					curves.append(temp_curve)
+				##
 
 			## edit mode
 			elif mode == 1:
@@ -78,19 +83,44 @@ def main():
 							for base_dot in curve.base_dots:
 								if base_dot.rect.collidepoint(ev.pos):
 									mouse_dragging = True
+									dragging = "base"
 									mouse_x, mouse_y = ev.pos
 									offset_x = base_dot.rect.x - mouse_x
 									offset_y = base_dot.rect.y - mouse_y
 									dragged_dot = base_dot
+									dragged_curves.append(curve)
+							for lever in curve.levers:
+								if lever.rect.collidepoint(ev.pos):
+									mouse_dragging = True
+									dragging = "lever"
+									mouse_x, mouse_y = ev.pos
+									offset_x = lever.rect.x - mouse_x
+									offset_y = lever.rect.y - mouse_y
+									dragged_dot = lever
+									dragged_curves.append(curve)
 
 				elif ev.type == pygame.MOUSEBUTTONUP:
 					mouse_dragging = False
+					dragged_curves = []
 
 				elif ev.type == pygame.MOUSEMOTION:
 					if mouse_dragging:
 						mouse_x, mouse_y = ev.pos
+
+						temp_x = dragged_dot.x
+						temp_y = dragged_dot.y
+
 						dragged_dot.x = mouse_x + offset_x
 						dragged_dot.y = mouse_y + offset_y
+
+						if dragging == "base":
+							for dragged_curve in dragged_curves:
+								ind = dragged_curve.base_dots.index(dragged_dot)
+								# if ind:
+								l = dragged_curve.levers[ind]
+								l.x = l.x - (temp_x - dragged_dot.x)
+								l.y = l.y - (temp_y - dragged_dot.y)
+
 
 
 		## fill with bg_color, THEN draw on bg and then BLIT bg on screen. works fine
@@ -109,3 +139,17 @@ def main():
 
 if __name__ == "__main__":
 	main()
+
+def triangle_problem(a, b):
+	ax = a[0]
+	ay = a[1]
+
+	bx = b[0]
+	by = b[1]
+
+	ab = sqrt((ax - bx)**2 + (ay - by)**2)
+	bc = 10
+
+	c = []
+
+	return c
