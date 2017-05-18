@@ -8,7 +8,7 @@ WINDOW_W = 600
 DISPLAY = (WINDOW_H, WINDOW_W)
 BG_COLOR = pygame.Color("#FFFFFF")
 LINES_COLOR = pygame.Color("#000000")
-FPS = 10
+FPS = 30
 ##
 
 def main():
@@ -34,9 +34,11 @@ def main():
 	mode = 0
 	curves = []
 	base_dots = []
+	dragged_dot = 0
 
 	done = False
 	while not done:
+		# bg.fill(BG_COLOR)
 		clock.tick(FPS)
 		screen.blit(bg, (0,0))
 		for ev in pygame.event.get():
@@ -49,6 +51,7 @@ def main():
 					elif mode == 1:
 						mode = 0
 
+			## adding mode
 			if ev.type == pygame.MOUSEBUTTONDOWN and mode == 0:
 				mouse_x, mouse_y = ev.pos
 				temp_dot = Dot(mouse_x, mouse_y, True, [])
@@ -57,6 +60,8 @@ def main():
 					b = [base_dots[-2], base_dots[-2], base_dots[-1], base_dots[-1]]
 					temp_curve = Curve(b)
 					curves.append(temp_curve)
+
+			## edit mode
 			elif mode == 1:
 				if ev.type == pygame.MOUSEBUTTONDOWN:
 					if ev.button == 1:
@@ -67,19 +72,28 @@ def main():
 									mouse_x, mouse_y = ev.pos
 									offset_x = base_dot.rect.x - mouse_x
 									offset_y = base_dot.rect.y - mouse_y
+									dragged_dot = base_dot
 				elif ev.type == pygame.MOUSEBUTTONUP:
 					mouse_dragging = False
 
 				elif ev.type == pygame.MOUSEMOTION:
 					if mouse_dragging:
 						mouse_x, mouse_y = ev.pos
-						for curve in curves:
-							for base_dot in curve.base_dots:
-								mouse_dragging = True
-								base_dot.rect.x = mouse_x + offset_x
-								base_dot.rect.y = mouse_y + offset_y
+						# for curve in curves:
+						# 	for base_dot in curve.base_dots:
+						# 		# mouse_dragging = True
+						# 		base_dot.rect.x = mouse_x + offset_x
+						# 		base_dot.x = mouse_x + offset_x
+						# 		base_dot.rect.y = mouse_y + offset_y
+						# 		base_dot.y = mouse_y + offset_y
+							# curve.update()
+						dragged_dot.rect.x = mouse_x + offset_x
+						dragged_dot.x = mouse_x + offset_x
+						dragged_dot.rect.y = mouse_y + offset_y
+						dragged_dot.y = mouse_y + offset_y
 
 		for c in curves:
+			c.update()
 			c.draw(bg)
 		pygame.display.update()
 

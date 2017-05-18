@@ -12,7 +12,7 @@ class Curve:
 		self.dots = []
 		for dot in base:
 			self.base_dots.append(dot)
-			dot.owners.append(self)# = self
+			dot.owners.append(self)
 
 		count = 0
 
@@ -21,6 +21,14 @@ class Curve:
 			self.dots.append(temp)
 			count += 1
 	
+	def update(self):
+		count = 0
+		self.dots[:] = []
+		while count != self.dots_count:
+			temp = self.bezierPoint(count/self.dots_count)
+			self.dots.append(temp)
+			count += 1	
+
 	def draw(self, bg):
 		for bdot in self.base_dots:
 			pygame.draw.rect(bg, pygame.Color("#000000"), bdot.rect, 1)

@@ -19,7 +19,7 @@ class Dot:
 		self.y = top
 
 		if base:
-			self.rect = Rect(left, top, 10, 10)
+			self.rect = Rect(self.x, self.y, 10, 10)
 		else:
 			self.rect = Rect(left, top, 1, 1)
 
