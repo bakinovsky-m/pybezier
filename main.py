@@ -1,5 +1,6 @@
 import pygame
 import math
+import sys
 from dot import Dot
 from curve import Curve 
 
@@ -18,7 +19,10 @@ def main():
 	clock = pygame.time.Clock()
 
 	# image loading init
-	image = pygame.image.load("metro.jpg")
+	if len(sys.argv) == 1:
+		image = pygame.image.load("metro.jpg")
+	else:
+		image = pygame.image.load(sys.argv[1])
 	img = image.copy()
 
 	# screen = pygame.display.set_mode(DISPLAY)
