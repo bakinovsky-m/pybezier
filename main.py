@@ -62,6 +62,9 @@ def main():
 					lever2 = Dot(b2.x + 10, b2.y + 10, "lever", [])
 					temp_curve = Curve([b1, lever1, lever2, b2])
 					curves.append(temp_curve)
+				elif ev.key == pygame.K_c:
+					base_dots = []
+					curves = []
 
 			## adding mode
 			if ev.type == pygame.MOUSEBUTTONDOWN and mode == 0:
@@ -147,16 +150,16 @@ def main():
 if __name__ == "__main__":
 	main()
 
-def triangle_problem(a, b):
-	ax = a[0]
-	ay = a[1]
+# def triangle_problem(a, b):
+# 	ax = a[0]
+# 	ay = a[1]
 
-	bx = b[0]
-	by = b[1]
+# 	bx = b[0]
+# 	by = b[1]
 
-	ab = sqrt((ax - bx)**2 + (ay - by)**2)
-	bc = 10
+# 	ab = sqrt((ax - bx)**2 + (ay - by)**2)
+# 	bc = 10
 
-	c = []
+# 	c = []
 
-	return c
+# 	return c
