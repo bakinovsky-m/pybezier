@@ -7,9 +7,8 @@ class Curve:
 		self.base_dots = []
 		self.levers = []
 		self.dots = []
-		# i = 1
+		
 		for dot in base:
-			# if i == 1 or i == 4:
 			if dot.type == "base":
 				self.base_dots.append(dot)
 			elif dot.type == "lever":

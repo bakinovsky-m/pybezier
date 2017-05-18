@@ -36,7 +36,7 @@ def main():
 	done = False
 	while not done:
 		clock.tick(FPS)
-		
+
 		for ev in pygame.event.get():
 			if ev.type == pygame.QUIT:
 				done = True
@@ -55,12 +55,21 @@ def main():
 					lever2 = Dot(b2.x + 10, b2.y + 10, "lever", [])
 					temp_curve = Curve([b1, lever1, lever2, b2])
 					curves.append(temp_curve)
+
 				elif ev.key == pygame.K_c:
 					base_dots = []
 					curves = []
 					index_of_first_curve_in_cycle = 0
-				# elif ev.key == pygame.K_d:
-				# 	curves.pop()
+
+				elif ev.key == pygame.K_u:
+					## shouldn't delete second base, because it is used by prev curve
+					base_dots.pop() #base
+					base_dots.pop() #lever
+					base_dots.pop() #lever
+
+					curves.pop()
+
+
 				elif ev.key == pygame.K_n:
 					index_of_first_curve_in_cycle  = len(curves)
 					base_dots = []
@@ -70,7 +79,7 @@ def main():
 				mouse_x, mouse_y = ev.pos
 				temp_dot = Dot(mouse_x, mouse_y, "base", [])
 
-				## levers inserts between last dot in list (which is fisrt point at all or base point of last curve)
+				## levers inserts between last dot in list (which is first point at all or base point of last curve)
 				## and new base point of current curve
 				base_dots.append(temp_dot)
 				if len(base_dots) > 1:
@@ -124,7 +133,7 @@ def main():
 						if dragging == "base":
 							for dragged_curve in dragged_curves:
 								ind = dragged_curve.base_dots.index(dragged_dot)
-								# if ind:
+								
 								l = dragged_curve.levers[ind]
 								l.x = l.x - (temp_x - dragged_dot.x)
 								l.y = l.y - (temp_y - dragged_dot.y)
