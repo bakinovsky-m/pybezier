@@ -2,14 +2,17 @@ import pygame
 from dot import Dot
 
 class Curve:
-	dots_count = 1000
-	base_dots = []
-	dots = []
+	# dots_count = 100
+	# base_dots = []
+	# dots = []
 
 	def __init__(self, base):
+		self.dots_count = 100
+		self.base_dots = []
+		self.dots = []
 		for dot in base:
 			self.base_dots.append(dot)
-			dot.owner = self
+			dot.owners.append(self)# = self
 
 		count = 0
 
@@ -24,6 +27,14 @@ class Curve:
 
 		for dot in self.dots:
 			pygame.draw.rect(bg, pygame.Color("#000000"), dot.rect, 1)
+
+	def __str__(self):
+		res = ""
+		for dot in self.base_dots:
+			# print(dot)
+			res += str(dot)
+			res += str('\n')
+		return res
 
 
 	def bezierPoint(self, t):
