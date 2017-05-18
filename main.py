@@ -16,19 +16,21 @@ def main():
 	## some init
 	pygame.init()
 	clock = pygame.time.Clock()
-	screen = pygame.display.set_mode(DISPLAY)
+
+	# image loading init
+	image = pygame.image.load("metro.jpg")
+	img = image.copy()
+
+	# screen = pygame.display.set_mode(DISPLAY)
+	screen = pygame.display.set_mode(img.get_rect().size)
 	pygame.display.set_caption("Bezier")
-	bg = pygame.Surface(DISPLAY)
 	mouse_dragging = False
 
 	# initialize font; must be called after 'pygame.init()' to avoid 'Font not Initialized' error
 	font = pygame.font.SysFont("monospace", 12)
 	# render text
-	text_label = font.render("q: quit; c: clear; f: finalize; u: undo; n: new cycle", 1, (0,0,0))
+	text_label = font.render("q: quit; c: clear; f: finalize; u: undo; n: new cycle; space: change mode", 1, (0,0,0))
 	##
-
-	bg.fill(BG_COLOR)
-
 
 	mode = 0
 	curves = []
@@ -144,17 +146,14 @@ def main():
 								l.y = l.y - (temp_y - dragged_dot.y)
 
 
-
-		## fill with bg_color, THEN draw on bg and then BLIT bg on screen. works fine
-		bg.fill(BG_COLOR)
-
 		for c in curves:
 			c.update()
-			c.draw(bg)
+			c.draw(img)
 
-		screen.blit(bg, (0,0))
+		screen.blit(image, (0,0))
+		screen.blit(img, (0,0))
 		screen.blit(text_label, (0, 0))
-		##
+		img = image.copy()
 
 		pygame.display.update()
 
