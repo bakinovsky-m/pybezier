@@ -55,6 +55,13 @@ def main():
 						mode = 1
 					elif mode == 1:
 						mode = 0
+				elif ev.key == pygame.K_f:
+					b1 = curves[-1].base_dots[-1]
+					b2 = curves[0].base_dots[0]
+					lever1 = Dot(b1.x + 10, b1.y + 10, "lever", [])
+					lever2 = Dot(b2.x + 10, b2.y + 10, "lever", [])
+					temp_curve = Curve([b1, lever1, lever2, b2])
+					curves.append(temp_curve)
 
 			## adding mode
 			if ev.type == pygame.MOUSEBUTTONDOWN and mode == 0:
