@@ -57,13 +57,16 @@ def main():
 			if ev.type == pygame.MOUSEBUTTONDOWN and mode == 0:
 				mouse_x, mouse_y = ev.pos
 				temp_dot = Dot(mouse_x, mouse_y, True, [])
+
+				## levers inserts between last dot in list (which is fisrt point at all or base point of last curve)
+				## and new base point of current curve
 				base_dots.append(temp_dot)
 				if len(base_dots) > 1:
-					rychag1 = Dot(base_dots[-2].x + 10, base_dots[-2].y - 10, True, base_dots[-2].owners)
-					rychag2 = Dot(base_dots[-1].x + 10, base_dots[-1].y - 10, True, base_dots[-1].owners)
-					# b = [base_dots[-2], base_dots[-2], base_dots[-1], base_dots[-1]]
-					b = [base_dots[-2], rychag1, base_dots[-1], rychag2]
-					# b = [rychag1, base_dots[-2], rychag2, base_dots[-1]]
+					lever_dot1 = Dot(base_dots[-2].x + 10, base_dots[-2].y + 10, True, base_dots[-1].owners)
+					base_dots.insert(-1, lever_dot1)
+					lever_dot2 = Dot(temp_dot.x + 10, temp_dot.y + 10, True, base_dots[-1].owners)
+					base_dots.insert(-1, lever_dot2)
+					b = [base_dots[-4], base_dots[-3], base_dots[-2], base_dots[-1]]
 					temp_curve = Curve(b)
 					curves.append(temp_curve)
 
@@ -99,7 +102,7 @@ def main():
 
 		screen.blit(bg, (0,0))
 		##
-		
+
 		pygame.display.update()
 
 	pygame.quit()
