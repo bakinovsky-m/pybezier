@@ -145,9 +145,7 @@ def main():
 											curve.c = get_c(curve.base_dots[0], curve.base_dots[-1], curve.t)
 											curve.ratio = ratio_t(curve.t)
 											curve.a = get_a(curve.b,curve.c,curve.ratio)
-											# curve.e1 = get_old_e1(curve.base_dots[0], curve.levers[0], curve.a, curve.t)
 											curve.old_e1 = get_old_e1(curve.base_dots[0], curve.levers[0], curve.a, curve.t)
-											# curve.e2 = get_old_e2(curve.base_dots[-1], curve.levers[-1], curve.a, curve.t)
 											curve.old_e2 = get_old_e2(curve.base_dots[-1], curve.levers[-1], curve.a, curve.t)
 
 
@@ -179,7 +177,6 @@ def main():
 							pygame.draw.line(img, pygame.Color("#00ff00"), (curve.b.x, curve.b.y), (curve.c.x, curve.c.y)), 
 
 							pygame.draw.line(img, pygame.Color("#0000ff"), (curve.e1.x, curve.e1.y), (curve.e2.x, curve.e2.y)), 
-							# pygame.draw.line(img, pygame.Color("#ff0000"), (curve.a.x, curve.a.y), (curve.b.x, curve.b.y)), 
 
 
 

@@ -1,7 +1,7 @@
 from dot import Dot
 
 def get_B(pushed_dot): #находим точку В, она же - точка в которую тыкнули
-	B = pushed_dot
+	B = Dot(pushed_dot.x, pushed_dot.y, "qwe", [])
 
 	return B
 
