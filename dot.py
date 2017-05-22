@@ -2,17 +2,19 @@ from pygame import Rect
 # from curve import Curve
 
 class Dot:
-	def __init__(self, left, top, type, owners):
+	def __init__(self, left, top, type_, owners):
 		self.owners = []
 		## base, lever or whatever else
-		self.type = type
+		self.type = type_
 		self.x = left
 		self.y = top
 
-		if self.type == "base" or self.type == "lever":
-			self.rect = Rect(self.x, self.y, 10, 10)
-		else:
-			self.rect = Rect(self.x, self.y, 1, 1)
+		# if self.type == "base" or self.type == "lever":
+		# 	self.rect = Rect(self.x, self.y, 10, 10)
+		# else:
+		# 	self.rect = Rect(self.x, self.y, 1, 1)
+
+		self.update()
 
 		self.owners = owners
 
