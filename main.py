@@ -155,6 +155,7 @@ def main():
 
 				elif ev.type == pygame.MOUSEBUTTONUP:
 					mouse_dragging = False
+					dragged_dot = None
 					current_figure.dragged_curve = None
 
 				elif ev.type == pygame.MOUSEMOTION:
@@ -174,6 +175,9 @@ def main():
 
 							pygame.draw.line(img, pygame.Color("#ff0000"), (curve.a.x, curve.a.y), (curve.b.x, curve.b.y)), 
 							pygame.draw.line(img, pygame.Color("#00ff00"), (curve.b.x, curve.b.y), (curve.c.x, curve.c.y)), 
+
+							pygame.draw.line(img, pygame.Color("#0000ff"), (curve.e1.x, curve.e1.y), (curve.e2.x, curve.e2.y)), 
+							# pygame.draw.line(img, pygame.Color("#ff0000"), (curve.a.x, curve.a.y), (curve.b.x, curve.b.y)), 
 
 
 
