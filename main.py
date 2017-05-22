@@ -138,7 +138,6 @@ def main():
 											offset_y = dot.inv_rect.y - mouse_y
 											dragged_dot = dot
 											curve.dot_moved = dot
-											print("ALARM")
 
 											current_figure.dragged_curve = curve
 											curve.b = get_B(dot)
@@ -148,6 +147,7 @@ def main():
 											curve.a = get_a(curve.b,curve.c,curve.ratio)
 											curve.e1 = get_old_e1(curve.base_dots[0], curve.levers[0], curve.a, curve.t)
 											curve.e2 = get_old_e2(curve.base_dots[-1], curve.levers[-1], curve.a, curve.t)
+
 
 								pygame.draw.lines(img, LINES_COLOR, True, poly)
 
@@ -170,8 +170,10 @@ def main():
 							curve.e1 = get_e1(dragged_dot,curve.e1, curve.b)
 							curve.e2 = get_e2(dragged_dot,curve.e2, curve.b)
 							curve.levers[0] = get_c_start(curve.base_dots[0], curve.a, curve.e1, curve.t)
-							print(curve.levers[0].x)
 							curve.levers[-1] = get_c_end(curve.base_dots[-1], curve.a, curve.e2, curve.t)
+
+							pygame.draw.line(img, pygame.Color("#ff0000"), (curve.a.x, curve.a.y), (curve.b.x, curve.b.y)), 
+							pygame.draw.line(img, pygame.Color("#00ff00"), (curve.b.x, curve.b.y), (curve.c.x, curve.c.y)), 
 
 
 
