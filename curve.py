@@ -17,6 +17,8 @@ class Curve:
 		self.c = None
 		self.ratio = None
 		self.a = None
+		self.old_e1 = None
+		self.old_e2 = None
 		self.e1 = None
 		self.e2 = None
 		#

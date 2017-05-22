@@ -145,8 +145,10 @@ def main():
 											curve.c = get_c(curve.base_dots[0], curve.base_dots[-1], curve.t)
 											curve.ratio = ratio_t(curve.t)
 											curve.a = get_a(curve.b,curve.c,curve.ratio)
-											curve.e1 = get_old_e1(curve.base_dots[0], curve.levers[0], curve.a, curve.t)
-											curve.e2 = get_old_e2(curve.base_dots[-1], curve.levers[-1], curve.a, curve.t)
+											# curve.e1 = get_old_e1(curve.base_dots[0], curve.levers[0], curve.a, curve.t)
+											curve.old_e1 = get_old_e1(curve.base_dots[0], curve.levers[0], curve.a, curve.t)
+											# curve.e2 = get_old_e2(curve.base_dots[-1], curve.levers[-1], curve.a, curve.t)
+											curve.old_e2 = get_old_e2(curve.base_dots[-1], curve.levers[-1], curve.a, curve.t)
 
 
 								pygame.draw.lines(img, LINES_COLOR, True, poly)
@@ -168,8 +170,8 @@ def main():
 						curve = current_figure.dragged_curve
 						if curve != None:
 							curve.a = get_new_a(dragged_dot,curve.c,curve.ratio)
-							curve.e1 = get_e1(dragged_dot,curve.e1, curve.b)
-							curve.e2 = get_e2(dragged_dot,curve.e2, curve.b)
+							curve.e1 = get_e1(dragged_dot,curve.old_e1, curve.b)
+							curve.e2 = get_e2(dragged_dot,curve.old_e2, curve.b)
 							curve.levers[0] = get_c_start(curve.base_dots[0], curve.a, curve.e1, curve.t)
 							curve.levers[-1] = get_c_end(curve.base_dots[-1], curve.a, curve.e2, curve.t)
 
