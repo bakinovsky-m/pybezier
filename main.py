@@ -162,8 +162,19 @@ def main():
 					if mouse_dragging:
 						mouse_x, mouse_y = ev.pos
 
+						temp_x = dragged_dot.x
+						temp_y = dragged_dot.y
+
 						dragged_dot.x = mouse_x + offset_x
 						dragged_dot.y = mouse_y + offset_y
+
+						if dragged_dot.type == "base":
+							for curve in current_figure.curves:
+								ind = curve.base_dots.index(dragged_dot)
+ # +								# if ind:
+								l = curve.levers[ind]
+								l.x = l.x - (temp_x - dragged_dot.x)
+								l.y = l.y - (temp_y - dragged_dot.y)
 
 						curve = current_figure.dragged_curve
 						if curve != None:
