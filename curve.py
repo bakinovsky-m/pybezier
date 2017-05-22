@@ -21,6 +21,10 @@ class Curve:
 		self.old_e2 = None
 		self.e1 = None
 		self.e2 = None
+
+		self.k = None
+		self.j = None
+		self.l = None
 		#
 		
 		for dot in base:

@@ -184,12 +184,20 @@ def main():
 							curve.levers[0] = get_c_start(curve.base_dots[0], curve.a, curve.e1, curve.t)
 							curve.levers[-1] = get_c_end(curve.base_dots[-1], curve.a, curve.e2, curve.t)
 
+							curve.k = get_k(curve.base_dots[0], curve.levers[0], curve.t)
+							curve.j = get_j(curve.levers[0], curve.levers[-1], curve.t)
+							curve.l = get_l(curve.base_dots[-1], curve.levers[-1], curve.t)
+
 							pygame.draw.line(img, pygame.Color("#ff0000"), (curve.a.x, curve.a.y), (curve.b.x, curve.b.y)), 
 							pygame.draw.line(img, pygame.Color("#00ff00"), (curve.b.x, curve.b.y), (curve.c.x, curve.c.y)), 
 
 							pygame.draw.line(img, pygame.Color("#0000ff"), (curve.e1.x, curve.e1.y), (curve.e2.x, curve.e2.y)), 
 
+							pygame.draw.line(img, pygame.Color("#0000ff"), (curve.a.x, curve.a.y), (curve.base_dots[0].x, curve.base_dots[0].y)), 
+							pygame.draw.line(img, pygame.Color("#0000ff"), (curve.a.x, curve.a.y), (curve.base_dots[-1].x, curve.base_dots[-1].y)), 
 
+							pygame.draw.line(img, pygame.Color("#0000ff"), (curve.k.x, curve.k.y), (curve.j.x, curve.j.y)), 
+							pygame.draw.line(img, pygame.Color("#0000ff"), (curve.j.x, curve.j.y), (curve.l.x, curve.l.y)), 
 
 		for f in figures:
 			for c in f.curves:
