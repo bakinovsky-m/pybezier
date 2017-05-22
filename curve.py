@@ -3,7 +3,7 @@ from dot import Dot
 
 class Curve:
 	def __init__(self, base):
-		self.dots_count = 1000
+		self.dots_count = 100
 		self.base_dots = []
 		self.levers = []
 		self.dots = []
@@ -19,22 +19,30 @@ class Curve:
 
 		count = 0
 
-		while count != self.dots_count:
+		# while count != self.dots_count:
+		for count in range(self.dots_count):
 			temp = self.bezierPoint(count/self.dots_count)
 			self.dots.append(temp)
-			count += 1
+			# count += 1
 	
+	# def update(self):
+	# 	for base_dot in self.base_dots:
+	# 		base_dot.update()
+	# 	for lever in self.levers:
+	# 		lever.update()
+	# 	count = 0
+	# 	self.dots[:] = []
+	# 	while count != self.dots_count:
+	# 		temp = self.bezierPoint(count/self.dots_count)
+	# 		self.dots.append(temp)
+	# 		count += 1	
 	def update(self):
 		for base_dot in self.base_dots:
 			base_dot.update()
 		for lever in self.levers:
 			lever.update()
-		count = 0
-		self.dots[:] = []
-		while count != self.dots_count:
-			temp = self.bezierPoint(count/self.dots_count)
-			self.dots.append(temp)
-			count += 1	
+		for dot in self.dots:
+			dot.update()
 
 	def draw(self, bg):
 		for bdot in self.base_dots:
@@ -42,9 +50,11 @@ class Curve:
 		if self.lever_visibility:
 			for lever in self.levers:
 				pygame.draw.rect(bg, pygame.Color("#000000"), lever.rect, 1)
+				pygame.draw.line(bg, pygame.Color("#000000"), (lever.x, lever.y), (self.base_dots[self.levers.index(lever)].x, self.base_dots[self.levers.index(lever)].y), 1)
 
 		for dot in self.dots:
 			pygame.draw.rect(bg, pygame.Color("#000000"), dot.rect, 1)
+			pygame.draw.rect(bg, pygame.Color("#000000"), dot.inv_rect, 1)
 
 	def __str__(self):
 		res = ""

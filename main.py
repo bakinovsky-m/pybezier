@@ -40,7 +40,6 @@ def main():
 
 	mode = 0
 	dragged_dot = 0
-	dragging = 0
 
 	figures = []
 
@@ -109,22 +108,37 @@ def main():
 					if ev.button == 1:
 						for f in figures:
 							for curve in f.curves:
+								mouse_x, mouse_y = ev.pos
+
+								poly = []
+								poly.append((curve.base_dots[0].x, curve.base_dots[0].x))
+								poly.append((curve.levers[0].x, curve.levers[0].y))
+								poly.append((curve.levers[1].x, curve.levers[1].y))
+								poly.append((curve.base_dots[1].x, curve.base_dots[1].x))
+
 								for base_dot in curve.base_dots:
 									if base_dot.rect.collidepoint(ev.pos):
 										mouse_dragging = True
-										dragging = "base"
-										mouse_x, mouse_y = ev.pos
 										offset_x = base_dot.rect.x - mouse_x
 										offset_y = base_dot.rect.y - mouse_y
 										dragged_dot = base_dot
 								for lever in curve.levers:
 									if lever.rect.collidepoint(ev.pos):
 										mouse_dragging = True
-										dragging = "lever"
-										mouse_x, mouse_y = ev.pos
 										offset_x = lever.rect.x - mouse_x
 										offset_y = lever.rect.y - mouse_y
 										dragged_dot = lever
+
+								if point_inside_polygon(mouse_x, mouse_y, poly):
+									for dot in curve.dots:
+										if dot.inv_rect.collidepoint(ev.pos):
+											mouse_dragging = True
+											offset_x = dot.inv_rect.x - mouse_x
+											offset_y = dot.inv_rect.y - mouse_y
+											dragged_dot = dot
+											print("ALARM")
+										# pass
+
 
 
 				elif ev.type == pygame.MOUSEBUTTONUP:
@@ -160,6 +174,27 @@ def calculateLever(b1, b2):
 	coords = (mid[0], mid[1])
 	return Dot(coords[0], coords[1], "lever", [])
 
+# determine if a point is inside a given polygon or not
+# Polygon is a list of (x,y) pairs.
+
+def point_inside_polygon(x, y, poly):
+
+    n = len(poly)
+    inside = False
+
+    p1x,p1y = poly[0]
+    for i in range(n + 1):
+        p2x,p2y = poly[i % n]
+        if y > min(p1y, p2y):
+            if y <= max(p1y, p2y):
+                if x <= max(p1x, p2x):
+                    if p1y != p2y:
+                        xinters = (y - p1y) * (p2x - p1x) / (p2y - p1y) + p1x
+                    if p1x == p2x or x <= xinters:
+                        inside = not inside
+        p1x,p1y = p2x,p2y
+
+    return inside
 
 
 if __name__ == "__main__":
