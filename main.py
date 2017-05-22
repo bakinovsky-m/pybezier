@@ -33,7 +33,8 @@ def main():
 	# initialize font; must be called after 'pygame.init()' to avoid 'Font not Initialized' error
 	font = pygame.font.SysFont("monospace", 12)
 	# render text
-	text_label = font.render("q: quit; c: clear; f: finalize; u: undo; n: new cycle; space: change mode", 1, (0,0,0))
+	text_label_instr = font.render("q: quit; c: clear; f: finalize; u: undo; n: new cycle; space: change mode", 1, (0,0,0))
+	text_label_mode = font.render("edit mode", 1, (255,0,0))
 	##
 
 	mode = 0
@@ -156,7 +157,10 @@ def main():
 
 		screen.blit(image, (0,0))
 		screen.blit(img, (0,0))
-		screen.blit(text_label, (0, 0))
+		screen.blit(text_label_instr, (0, 0))
+		if mode:
+			screen.blit(text_label_mode, (0, 15))
+
 		img = image.copy()
 
 		pygame.display.update()
