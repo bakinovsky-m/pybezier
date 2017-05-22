@@ -149,14 +149,13 @@ def main():
 											curve.e1 = get_old_e1(curve.base_dots[0], curve.levers[0], curve.a, curve.t)
 											curve.e2 = get_old_e2(curve.base_dots[-1], curve.levers[-1], curve.a, curve.t)
 
-
-
 								pygame.draw.lines(img, LINES_COLOR, True, poly)
 
 
 
 				elif ev.type == pygame.MOUSEBUTTONUP:
 					mouse_dragging = False
+					current_figure.dragged_curve = None
 
 				elif ev.type == pygame.MOUSEMOTION:
 					if mouse_dragging:
