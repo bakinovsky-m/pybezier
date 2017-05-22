@@ -4,7 +4,7 @@ from functions import *
 
 class Curve:
 	def __init__(self, base):
-		self.dots_count = 100
+		self.dots_count = 1000
 		self.base_dots = []
 		self.levers = []
 		self.dots = []
@@ -41,8 +41,10 @@ class Curve:
 	
 	def update(self):
 		for base_dot in self.base_dots:
+			base_dot.owners.append(self)
 			base_dot.update()
 		for lever in self.levers:
+			lever.owners.append(self)
 			lever.update()
 
 		self.dots[:] = []
