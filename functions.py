@@ -35,6 +35,32 @@ def get_a(B, C, ratio): #находим точку А, зная B, C и конс
     a = Dot(a_x, a_y, "qwe", [])
     return a
 
+def get_old_e1(start_dot, old_control_start, A, t):
+    k_x = start_dot.x + (old_control_start.x - start_dot.x)*t
+    k_y = start_dot.y + (old_control_start.y - start_dot.y)*t
+
+    k = Dot(k_x, k_y, "qwe", [])
+
+    old_e1_x = k.x + (A.x - k.x)*t
+    old_e1_y = k.y + (A.y - k.y)*t
+
+    old_e1 = Dot(old_e1_x, old_e1_y, "qwe", [])
+
+    return old_e1
+
+def get_old_e2(end_dot, old_control_end, A, t):
+    k_x = old_control_end.x + (end_dot.x - old_control_end.x)*t
+    k_y = old_control_end.y + (end_dot.y - old_control_end.y)*t
+
+    k = Dot(k_x, k_y, "qwe", [])
+
+    old_e2_x = A.x + (k.x - A.x)*t
+    old_e2_y = A.y + (k.y - A.y)*t 
+
+    old_e2 = Dot(old_e2_x, old_e2_y, "qwe", [])
+
+    return old_e2
+
 def get_new_a(cur_dot, C, ratio): # теперь подсчитываем значение A для точки, куда перетянули
     new_a_x = cur_dot.x - (C.x - cur_dot.x)/ratio
     new_a_y = cur_dot.y - (C.y - cur_dot.y)/ratio
@@ -43,17 +69,25 @@ def get_new_a(cur_dot, C, ratio): # теперь подсчитываем зна
 
     return new_a    
 
-def get_e1(cur_dot, start_dot, old_control_start, A, B, t):  #находим e1, нам нужна точка начала курвы, ее точка-рычаг, новое положение нашей точки
-    k_x = start_dot.x + (old_control_start.x - start_dot.x)*t #высчитываем точку на рычаге
-    k_y = start_dot.y + (old_control_start.y - start_dot.y)*t #меня напрягает, что в других формулах идет деление на t
+# def get_e1(cur_dot, start_dot, old_control_start, A, B, t):  #находим e1, нам нужна точка начала курвы, ее точка-рычаг, новое положение нашей точки
+#     k_x = start_dot.x + (old_control_start.x - start_dot.x)*t #высчитываем точку на рычаге
+#     k_y = start_dot.y + (old_control_start.y - start_dot.y)*t #меня напрягает, что в других формулах идет деление на t
 
-    k = Dot(k_x, k_y, "qwe", [])
+#     k = Dot(k_x, k_y, "qwe", [])
 
-    old_e1_x = k.x + (A.x - k.x)*t                            #а в написанной мной - умножение
-    old_e1_y = k.y + (A.y - k.y)*t                            #подсчет первоначального положения e1
+#     old_e1_x = k.x + (A.x - k.x)*t                            #а в написанной мной - умножение
+#     old_e1_y = k.y + (A.y - k.y)*t                            #подсчет первоначального положения e1
 
-    old_e1 = Dot(old_e1_x, old_e1_y, "qwe", [])
+#     old_e1 = Dot(old_e1_x, old_e1_y, "qwe", [])
 
+#     e1_x = old_e1.x + (cur_dot.x - B.x)                       #параллельный перенос
+#     e1_y = old_e1.y + (cur_dot.y - B.y)
+
+#     e1 = Dot(e1_x, e1_y, "qwe", [])
+
+#     return e1
+
+def get_e1(cur_dot, old_e1, B):  #находим e1              
     e1_x = old_e1.x + (cur_dot.x - B.x)                       #параллельный перенос
     e1_y = old_e1.y + (cur_dot.y - B.y)
 
@@ -61,23 +95,31 @@ def get_e1(cur_dot, start_dot, old_control_start, A, B, t):  #находим e1,
 
     return e1
 
-def get_e2(cur_dot, end_dot, old_control_end, A, B, t):      #то же самое
-    k_x = old_control_end.x + (end_dot.x - old_control_end.x)*t
-    k_y = old_control_end.y + (end_dot.y - old_control_end.y)*t
+# def get_e2(cur_dot, end_dot, old_control_end, A, B, t):      #то же самое
+#     k_x = old_control_end.x + (end_dot.x - old_control_end.x)*t
+#     k_y = old_control_end.y + (end_dot.y - old_control_end.y)*t
 
-    k = Dot(k_x, k_y, "qwe", [])
+#     k = Dot(k_x, k_y, "qwe", [])
 
-    old_e2_x = A.x + (k.x - A.x)*t
-    old_e2_y = A.y + (k.y - A.y)*t
+#     old_e2_x = A.x + (k.x - A.x)*t
+#     old_e2_y = A.y + (k.y - A.y)*t
 
-    old_e2 = Dot(old_e2_x, old_e2_y, "qwe", [])
+#     old_e2 = Dot(old_e2_x, old_e2_y, "qwe", [])
 
+#     e2_x = old_e2.x + (cur_dot.x - B.x)
+#     e2_y = old_e2.y + (cur_dot.y - B.y)
+
+#     e2 = Dot(e2_x, e2_y, "qwe", [])
+
+#     return e2    
+
+def get_e2(cur_dot, old_e2, B):
     e2_x = old_e2.x + (cur_dot.x - B.x)
     e2_y = old_e2.y + (cur_dot.y - B.y)
 
     e2 = Dot(e2_x, e2_y, "qwe", [])
 
-    return e2    
+    return e2  
 
 def get_c_start(start_dot, new_a, e1, t):  #ну и, наконец нахождение новых контрольных точек, далльше просто строишь
     v_x = new_a.x + (e1.x - new_a.x)/t     #кривую по ним и точкам начала и конца

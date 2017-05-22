@@ -137,10 +137,20 @@ def main():
 											offset_x = dot.inv_rect.x - mouse_x
 											offset_y = dot.inv_rect.y - mouse_y
 											dragged_dot = dot
-											# print(dot.owners)
 											curve.dot_moved = dot
 											print("ALARM")
-										# pass
+
+											current_figure.dragged_curve = curve
+											curve.b = get_B(dot)
+											curve.t = get_t(dot)
+											curve.c = get_c(curve.base_dots[0], curve.base_dots[-1], curve.t)
+											curve.ratio = ratio_t(curve.t)
+											curve.a = get_a(curve.b,curve.c,curve.ratio)
+											curve.e1 = get_old_e1(curve.base_dots[0], curve.levers[0], curve.a, curve.t)
+											curve.e2 = get_old_e2(curve.base_dots[-1], curve.levers[-1], curve.a, curve.t)
+
+
+
 								pygame.draw.lines(img, LINES_COLOR, True, poly)
 
 
@@ -154,6 +164,15 @@ def main():
 
 						dragged_dot.x = mouse_x + offset_x
 						dragged_dot.y = mouse_y + offset_y
+
+						curve = current_figure.dragged_curve
+						if curve != None:
+							curve.a = get_new_a(dragged_dot,curve.c,curve.ratio)
+							curve.e1 = get_e1(dragged_dot,curve.e1, curve.b)
+							curve.e2 = get_e2(dragged_dot,curve.e2, curve.b)
+							curve.levers[0] = get_c_start(curve.base_dots[0], curve.a, curve.e1, curve.t)
+							curve.levers[-1] = get_c_end(curve.base_dots[-1], curve.a, curve.e2, curve.t)
+
 
 
 		for f in figures:
