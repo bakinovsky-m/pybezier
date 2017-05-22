@@ -35,27 +35,63 @@ def get_a(B, C, ratio): #находим точку А, зная B, C и конс
     a = Dot(a_x, a_y, "qwe", [])
     return a
 
-def get_old_e1(start_dot, old_control_start, A, t):
+# def get_old_e1(start_dot, old_control_start, A, t):
+#     k_x = start_dot.x + (old_control_start.x - start_dot.x)*t
+#     k_y = start_dot.y + (old_control_start.y - start_dot.y)*t
+
+#     k = Dot(k_x, k_y, "qwe", [])
+
+#     old_e1_x = k.x + (A.x - k.x)*t
+#     old_e1_y = k.y + (A.y - k.y)*t
+
+#     old_e1 = Dot(old_e1_x, old_e1_y, "qwe", [])
+
+#     return old_e1
+
+def get_old_e1(start_dot, old_control_start, old_control_end, t): #_!
     k_x = start_dot.x + (old_control_start.x - start_dot.x)*t
     k_y = start_dot.y + (old_control_start.y - start_dot.y)*t
 
     k = Dot(k_x, k_y, "qwe", [])
 
-    old_e1_x = k.x + (A.x - k.x)*t
-    old_e1_y = k.y + (A.y - k.y)*t
+    j_x = old_control_start.x + (old_control_end.x - old_control_start.x)*t #_!
+    j_y = old_control_start.y + (old_control_end.y - old_control_start.y)*t #_!
+
+    j = Dot(j_x, j_y, "qwe", []) #_!
+
+    old_e1_x = k.x + (j.x - k.x)*t
+    old_e1_y = k.y + (j.y - k.y)*t
 
     old_e1 = Dot(old_e1_x, old_e1_y, "qwe", [])
 
     return old_e1
 
-def get_old_e2(end_dot, old_control_end, A, t):
+# def get_old_e2(end_dot, old_control_end, A, t):
+#     k_x = old_control_end.x + (end_dot.x - old_control_end.x)*t
+#     k_y = old_control_end.y + (end_dot.y - old_control_end.y)*t
+
+#     k = Dot(k_x, k_y, "qwe", [])
+
+#     old_e2_x = A.x + (k.x - A.x)*t
+#     old_e2_y = A.y + (k.y - A.y)*t 
+
+#     old_e2 = Dot(old_e2_x, old_e2_y, "qwe", [])
+
+#     return old_e2
+
+def get_old_e2(end_dot, old_control_end, old_control_start, t): #_!
     k_x = old_control_end.x + (end_dot.x - old_control_end.x)*t
     k_y = old_control_end.y + (end_dot.y - old_control_end.y)*t
 
     k = Dot(k_x, k_y, "qwe", [])
 
-    old_e2_x = A.x + (k.x - A.x)*t
-    old_e2_y = A.y + (k.y - A.y)*t 
+    j_x = old_control_start.x + (old_control_end.x - old_control_start.x)*t
+    j_y = old_control_start.y + (old_control_end.y - old_control_start.y)*t
+
+    j = Dot(j_x, j_y, "qwe", [])
+
+    old_e2_x = j.x + (k.x - j.x)*t
+    old_e2_y = j.y + (k.y - j.y)*t 
 
     old_e2 = Dot(old_e2_x, old_e2_y, "qwe", [])
 
