@@ -7,6 +7,7 @@ class Curve:
 		self.base_dots = []
 		self.levers = []
 		self.dots = []
+		self.lever_visibility = True
 		
 		for dot in base:
 			if dot.type == "base":
@@ -38,8 +39,9 @@ class Curve:
 	def draw(self, bg):
 		for bdot in self.base_dots:
 			pygame.draw.rect(bg, pygame.Color("#000000"), bdot.rect, 2)
-		for lever in self.levers:
-			pygame.draw.rect(bg, pygame.Color("#000000"), lever.rect, 1)
+		if self.lever_visibility:
+			for lever in self.levers:
+				pygame.draw.rect(bg, pygame.Color("#000000"), lever.rect, 1)
 
 		for dot in self.dots:
 			pygame.draw.rect(bg, pygame.Color("#000000"), dot.rect, 1)
