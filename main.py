@@ -39,17 +39,10 @@ def main():
 	##
 
 	mode = 0
-	# curves = []
-	# base_dots = []
-	# dragged_dot = 0
-	dragged_curves = []
-	# dragging = 0
-	# index_of_first_curve_in_cycle = 0
+	dragged_dot = 0
+	dragging = 0
 
 	figures = []
-	# figure = Figure()
-	# current_figure = figure
-	# figures.append(figure)
 
 	done = False
 	while not done:
@@ -124,7 +117,6 @@ def main():
 										offset_x = base_dot.rect.x - mouse_x
 										offset_y = base_dot.rect.y - mouse_y
 										dragged_dot = base_dot
-										dragged_curves.append(curve)
 								for lever in curve.levers:
 									if lever.rect.collidepoint(ev.pos):
 										mouse_dragging = True
@@ -133,29 +125,18 @@ def main():
 										offset_x = lever.rect.x - mouse_x
 										offset_y = lever.rect.y - mouse_y
 										dragged_dot = lever
-										dragged_curves.append(curve)
+
 
 				elif ev.type == pygame.MOUSEBUTTONUP:
 					mouse_dragging = False
-					dragged_curves = []
 
 				elif ev.type == pygame.MOUSEMOTION:
 					if mouse_dragging:
 						mouse_x, mouse_y = ev.pos
 
-						temp_x = dragged_dot.x
-						temp_y = dragged_dot.y
-
 						dragged_dot.x = mouse_x + offset_x
 						dragged_dot.y = mouse_y + offset_y
 
-						if dragging == "base":
-							for dragged_curve in dragged_curves:
-								ind = dragged_curve.base_dots.index(dragged_dot)
-
-								l = dragged_curve.levers[ind]
-								l.x = l.x - (temp_x - dragged_dot.x)
-								l.y = l.y - (temp_y - dragged_dot.y)
 
 		for f in figures:
 			for c in f.curves:
