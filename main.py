@@ -170,6 +170,7 @@ def main():
 							curve.e1 = get_e1(dragged_dot,curve.e1, curve.b)
 							curve.e2 = get_e2(dragged_dot,curve.e2, curve.b)
 							curve.levers[0] = get_c_start(curve.base_dots[0], curve.a, curve.e1, curve.t)
+							print(curve.levers[0].x)
 							curve.levers[-1] = get_c_end(curve.base_dots[-1], curve.a, curve.e2, curve.t)
 
 

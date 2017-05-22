@@ -94,7 +94,7 @@ def get_c_start(start_dot, new_a, e1, t):  #ну и, наконец нахожд
     control_start_x = v.x + (v.x - start_dot.x)/t
     control_start_y = v.y + (v.y - start_dot.y)/t
 
-    control_start = Dot(control_start_x, control_start_y, "qwe", [])
+    control_start = Dot(control_start_x, control_start_y, "lever", [])
 
     return control_start 
 
@@ -107,6 +107,6 @@ def get_c_end(end_dot, new_a, e2, t):
     control_end_x = v.x + (v.x - end_dot.x)/t
     control_end_y = v.y + (v.y - end_dot.y)/t
 
-    control_end = Dot(control_end_x, control_end_y, "qwe", [])
+    control_end = Dot(control_end_x, control_end_y, "lever", [])
 
     return control_end
