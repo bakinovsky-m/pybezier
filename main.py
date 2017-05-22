@@ -69,8 +69,8 @@ def main():
 				elif ev.key == pygame.K_f:
 					b1 = current_figure.curves[-1].base_dots[-1]
 					b2 = current_figure.curves[0].base_dots[0]
-					lever1 = Dot(b1.x + 10, b1.y + 10, "lever", [])
-					lever2 = Dot(b2.x + 10, b2.y + 10, "lever", [])
+					lever1 = calculateLever(b1, b2)
+					lever2 = calculateLever(b1, b2)
 					temp_curve = Curve([b1, lever1, lever2, b2])
 					current_figure.curves.append(temp_curve)
 
@@ -104,8 +104,8 @@ def main():
 				current_figure.base_dots.append(temp_dot)
 				if len(current_figure.base_dots) > 1:
 					prev_dot = current_figure.base_dots[-2]
-					lever1 = Dot(prev_dot.x + 10, prev_dot.y + 10, "lever", [])
-					lever2 = Dot(temp_dot.x + 10, temp_dot.y + 10, "lever", [])
+					lever1 = calculateLever(prev_dot, temp_dot)
+					lever2 = calculateLever(prev_dot, temp_dot)
 					c = Curve((prev_dot, lever1, lever2, temp_dot))
 					current_figure.addCurve(c)
 				##
@@ -173,6 +173,13 @@ def main():
 		pygame.display.update()
 
 	pygame.quit()
+
+def calculateLever(b1, b2):
+	mid = ((b1.x + b2.x)/2, (b1.y + b2.y)/2)
+	coords = (mid[0], mid[1])
+	return Dot(coords[0], coords[1], "lever", [])
+
+
 
 if __name__ == "__main__":
 	main()
