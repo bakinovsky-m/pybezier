@@ -4,6 +4,7 @@ import sys
 from dot import Dot
 from curve import Curve 
 from figure import Figure
+from functions import *
 
 ## Global variables for pygame
 WINDOW_H = 800
@@ -111,10 +112,10 @@ def main():
 								mouse_x, mouse_y = ev.pos
 
 								poly = []
-								poly.append((curve.base_dots[0].x, curve.base_dots[0].x))
+								poly.append((curve.base_dots[0].x, curve.base_dots[0].y))
 								poly.append((curve.levers[0].x, curve.levers[0].y))
 								poly.append((curve.levers[1].x, curve.levers[1].y))
-								poly.append((curve.base_dots[1].x, curve.base_dots[1].x))
+								poly.append((curve.base_dots[1].x, curve.base_dots[1].y))
 
 								for base_dot in curve.base_dots:
 									if base_dot.rect.collidepoint(ev.pos):
@@ -136,8 +137,11 @@ def main():
 											offset_x = dot.inv_rect.x - mouse_x
 											offset_y = dot.inv_rect.y - mouse_y
 											dragged_dot = dot
+											# print(dot.owners)
+											curve.dot_moved = dot
 											print("ALARM")
 										# pass
+								pygame.draw.lines(img, LINES_COLOR, True, poly)
 
 
 
