@@ -146,6 +146,7 @@ def main():
 											curve.ratio = ratio_t(curve.t)
 											curve.a = get_a(curve.b,curve.c,curve.ratio)
 
+
 											curve.old_e1 = get_old_e1(curve.base_dots[0], curve.levers[0], curve.levers[-1], curve.t)
 											curve.old_e2 = get_old_e2(curve.base_dots[-1], curve.levers[-1], curve.levers[0], curve.t)
 											print("1", curve.a.x, curve.a.y)
@@ -174,6 +175,7 @@ def main():
 
 						if dragged_dot.type == "base":
 							for curve in current_figure.curves:
+
 								ind = curve.base_dots.index(dragged_dot)
  # +								# if ind:
 								l = curve.levers[ind]
@@ -206,6 +208,7 @@ def main():
 
 							pygame.draw.line(img, pygame.Color("#ff00ff"), (curve.k.x, curve.k.y), (curve.a.x, curve.a.y))
 							pygame.draw.line(img, pygame.Color("#ff00ff"), (curve.a.x, curve.a.y), (curve.l.x, curve.l.y))
+
 		for f in figures:
 			for c in f.curves:
 				c.update()
