@@ -173,15 +173,19 @@ def main():
 
 						if dragged_dot.type == "base":
 							for curve in current_figure.curves:
+								try:
+									ind = curve.base_dots.index(dragged_dot)
+	 # +								# if ind:
+									l = curve.levers[ind]
+									l.x = l.x - (temp_x - dragged_dot.x)
+									l.y = l.y - (temp_y - dragged_dot.y)
+								except Exception:
+									pass
 
-								ind = curve.base_dots.index(dragged_dot)
- # +								# if ind:
-								l = curve.levers[ind]
-								l.x = l.x - (temp_x - dragged_dot.x)
-								l.y = l.y - (temp_y - dragged_dot.y)
 
 						curve = current_figure.dragged_curve
 						if curve != None:
+
 							curve.a = get_new_a(dragged_dot,curve.c,curve.ratio)
 							curve.e1 = get_e1(dragged_dot,curve.old_e1, curve.b)
 							curve.e2 = get_e2(dragged_dot,curve.old_e2, curve.b)
