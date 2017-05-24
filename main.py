@@ -114,8 +114,13 @@ def main():
 								poly = []
 								poly.append((curve.base_dots[0].x, curve.base_dots[0].y))
 								poly.append((curve.levers[0].x, curve.levers[0].y))
-								poly.append((curve.levers[1].x, curve.levers[1].y))
-								poly.append((curve.base_dots[1].x, curve.base_dots[1].y))
+								if (curve.base_dots[0].y < curve.levers[0].y) or (curve.levers[1].y < curve.base_dots[1].y):
+									poly.append((curve.levers[1].x, curve.levers[1].y))
+									poly.append((curve.base_dots[1].x, curve.base_dots[1].y))
+								else:
+									poly.append((curve.base_dots[1].x, curve.base_dots[1].y))
+									poly.append((curve.levers[1].x, curve.levers[1].y))
+									
 
 								for base_dot in curve.base_dots:
 									if base_dot.rect.collidepoint(ev.pos):
