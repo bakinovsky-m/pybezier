@@ -112,10 +112,8 @@ def main():
 								mouse_x, mouse_y = ev.pos
 
 								poly = []
-								poly.append((curve.base_dots[0].x, curve.base_dots[0].y))
-								poly.append((curve.levers[0].x, curve.levers[0].y))
-								poly.append((curve.levers[1].x, curve.levers[1].y))
-								poly.append((curve.base_dots[1].x, curve.base_dots[1].y))
+
+								poly = point_sort_to_poligon((curve.levers[0].x, curve.levers[0].y), (curve.base_dots[0].x, curve.base_dots[0].y), (curve.base_dots[1].x, curve.base_dots[1].y), (curve.levers[1].x, curve.levers[1].y))
 
 								for base_dot in curve.base_dots:
 									if base_dot.rect.collidepoint(ev.pos):
@@ -175,15 +173,19 @@ def main():
 
 						if dragged_dot.type == "base":
 							for curve in current_figure.curves:
+								try:
+									ind = curve.base_dots.index(dragged_dot)
+	 # +								# if ind:
+									l = curve.levers[ind]
+									l.x = l.x - (temp_x - dragged_dot.x)
+									l.y = l.y - (temp_y - dragged_dot.y)
+								except Exception:
+									pass
 
-								ind = curve.base_dots.index(dragged_dot)
- # +								# if ind:
-								l = curve.levers[ind]
-								l.x = l.x - (temp_x - dragged_dot.x)
-								l.y = l.y - (temp_y - dragged_dot.y)
 
 						curve = current_figure.dragged_curve
 						if curve != None:
+
 							curve.a = get_new_a(dragged_dot,curve.c,curve.ratio)
 							curve.e1 = get_e1(dragged_dot,curve.old_e1, curve.b)
 							curve.e2 = get_e2(dragged_dot,curve.old_e2, curve.b)
@@ -252,6 +254,8 @@ def point_inside_polygon(x, y, poly):
         p1x,p1y = p2x,p2y
 
     return inside
+
+
 
 
 if __name__ == "__main__":
