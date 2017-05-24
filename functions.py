@@ -148,3 +148,62 @@ def get_l(end_dot, control_end, t): #_!
     l = Dot(l_x, l_y, "qwe", [])
 
     return l  
+
+# def line_intersection(line1, line2):
+#     xdiff = (line1[0][0] - line1[1][0], line2[0][0] - line2[1][0])
+#     ydiff = (line1[0][1] - line1[1][1], line2[0][1] - line2[1][1])
+
+#     def det(a, b):
+#         return a[0] * b[1] - a[1] * b[0]
+
+#     div = det(xdiff, ydiff)
+#     if div == 0:
+#         print("here")
+#         return False
+#     else:   
+#         d = (det(*line1), det(*line2))
+#         x = det(d, xdiff) / div
+#         y = det(d, ydiff) / div
+        
+#         return True    
+
+class Point:
+    def __init__(self,x,y):
+        self.x = x
+        self.y = y
+
+def ccw(A,B,C):
+    return (C.y-A.y)*(B.x-A.x) > (B.y-A.y)*(C.x-A.x)
+
+def line_intersection(A,B,C,D):
+    return ccw(A,C,D) != ccw(B,C,D) and ccw(A,B,C) != ccw(A,B,D)
+
+def point_sort_to_poligon(p1, p2, p3, p4):
+    poligon = []
+    a = Point(p1[0], p1[1])
+    b = Point(p2[0], p2[1])
+    c = Point(p3[0], p3[1])
+    d = Point(p4[0], p4[1])
+
+    if line_intersection(a, b, c, d) == True:
+        poligon.append(p1)
+        poligon.append(p3)
+        poligon.append(p2)
+        poligon.append(p4)
+        return poligon
+    if line_intersection(a, d, c, b) == True:
+        poligon.append(p1)
+        poligon.append(p2)
+        poligon.append(p4)
+        poligon.append(p3)
+        return poligon
+    else:
+        poligon.append(p1)
+        poligon.append(p2)
+        poligon.append(p3)
+        poligon.append(p4)
+    
+    return poligon
+
+    
+
