@@ -107,7 +107,7 @@ class Curve:
 		pygame.draw.line(img, pygame.Color("#00ffff"), (self.base_dots[1].x, self.base_dots[1].y), (self.base_dots[0].x, self.base_dots[0].y))
 		pygame.draw.line(img, pygame.Color("#00ffff"), (self.levers[1].x, self.levers[1].y), (self.levers[0].x, self.levers[0].y))
 
-	def get_old_id(self, dot):	# Функция-контейнер для подсчета 
+	def get_old_id(self, dot):	# Функция-контейнер для нахождения первоначальных точек, необходимых для оттягивания кривой
 		self.b = get_B(dot)
 		self.t = get_t(dot)
 		self.c = get_c(self.base_dots[0], self.base_dots[-1], self.t)
@@ -118,7 +118,7 @@ class Curve:
 		self.e1 = get_old_e1(self.base_dots[0], self.levers[0], self.levers[-1], self.t)
 		self.e2 = get_old_e2(self.base_dots[-1], self.levers[-1], self.levers[0], self.t)		
 
-	def get_new_id(self, dragged_dot):
+	def get_new_id(self, dragged_dot):  # Функция-контейнер для пересчета точек, необходимых для оттягивания кривой
 		self.a = get_new_a(dragged_dot,self.c,self.ratio)
 		self.e1 = get_e1(dragged_dot,self.old_e1, self.b)
 		self.e2 = get_e2(dragged_dot,self.old_e2, self.b)

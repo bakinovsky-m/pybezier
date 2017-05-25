@@ -1,6 +1,7 @@
 import pygame
 import math
 import sys
+from tkinter.filedialog import askopenfilename
 from dot import Dot
 from curve import Curve 
 from figure import Figure
@@ -20,9 +21,11 @@ def main():
 	pygame.init()
 	clock = pygame.time.Clock()
 
+	filename = askopenfilename()
+
 	# image loading init
 	if len(sys.argv) == 1:
-		image = pygame.image.load("metro.jpg")
+		image = pygame.image.load(filename)
 	else:
 		image = pygame.image.load(sys.argv[1])
 	img = image.copy()
