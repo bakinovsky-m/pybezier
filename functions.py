@@ -1,49 +1,47 @@
 from dot import Dot
 
-def get_B(pushed_dot): #находим точку В, она же - точка в которую тыкнули
+def get_B(pushed_dot):  # Вычисление точки B для нажатой точки на кривой 
 	B = Dot(pushed_dot.x, pushed_dot.y, "qwe", [])
 
 	return B
 
-def get_t(pushed_dot): #находим t 
-    kurwa = pushed_dot.owners #я пытаюсь выдернуть имя кривой из того, что знает нажатая точка
+def get_t(pushed_dot):  # Вычисление значения t для нажатой точки на кривой 
+    kurwa = pushed_dot.owners
 
     t = kurwa.dots.index(pushed_dot)/len(kurwa.dots)
     return t
 
-def get_c(start_dot, end_dot, t): #находим C по точкам начала кривой, конца кривой и t(хотя можно было и просто по нажатой)
+def get_c(start_dot, end_dot, t):   # Вычисление C по точкам начала кривой, конца кривой и t
     u = (1 - t)**3/(t**3 + (1 - t)**3)
 
-    # C.x = u*start_dot.x + (1 - u)*end_dot.x;
     c_x = u*start_dot.x + (1 - u)*end_dot.x
-    # C.y = u*start_dot.y + (1 - u)*end_dot.y;
     c_y = u*start_dot.y + (1 - u)*end_dot.y
     c = Dot(c_x, c_y, "qwe", [])
+
     return c
 
-def ratio_t(t): #находим константное отношение по формуле для t
+def ratio_t(t):   # Вычисление константного отношения по формуле для t
 
     return abs((t**3 + (1 - t)**3 - 1)/(t**3 + (1 - t)**3))
 
-def get_a(B, C, ratio): #находим точку А, зная B, C и константное отношение
-    # A.x = B.x - (C.x - B.x)/ratio
+def get_a(B, C, ratio):     # Вычисление точек А, по B, C и константному отношению
     a_x = B.x - (C.x - B.x)/ratio
-    # A.y = B.y - (C.y - B.y)/ratio 
     a_y = B.y - (C.y - B.y)/ratio 
 
     a = Dot(a_x, a_y, "qwe", [])
+
     return a
 
-def get_old_e1(start_dot, old_control_start, old_control_end, t): #_!
+def get_old_e1(start_dot, old_control_start, old_control_end, t): # Находим точки второй итерации алгоритма де Кастельжо 
     k_x = start_dot.x + (old_control_start.x - start_dot.x)*t
     k_y = start_dot.y + (old_control_start.y - start_dot.y)*t
 
     k = Dot(k_x, k_y, "qwe", [])
 
-    j_x = old_control_start.x + (old_control_end.x - old_control_start.x)*t #_!
-    j_y = old_control_start.y + (old_control_end.y - old_control_start.y)*t #_!
+    j_x = old_control_start.x + (old_control_end.x - old_control_start.x)*t
+    j_y = old_control_start.y + (old_control_end.y - old_control_start.y)*t
 
-    j = Dot(j_x, j_y, "qwe", []) #_!
+    j = Dot(j_x, j_y, "qwe", []) 
 
     old_e1_x = k.x + (j.x - k.x)*t
     old_e1_y = k.y + (j.y - k.y)*t
@@ -53,7 +51,7 @@ def get_old_e1(start_dot, old_control_start, old_control_end, t): #_!
     return old_e1
 
 
-def get_old_e2(end_dot, old_control_end, old_control_start, t): #_!
+def get_old_e2(end_dot, old_control_end, old_control_start, t): # Вычисление точек второй итерации алгоритма де Кастельжо
     k_x = old_control_end.x + (end_dot.x - old_control_end.x)*t
     k_y = old_control_end.y + (end_dot.y - old_control_end.y)*t
 
@@ -71,7 +69,7 @@ def get_old_e2(end_dot, old_control_end, old_control_start, t): #_!
 
     return old_e2
 
-def get_new_a(cur_dot, C, ratio): # теперь подсчитываем значение A для точки, куда перетянули
+def get_new_a(cur_dot, C, ratio): # Пересчет значения A для нового положения точки кривой 
     new_a_x = cur_dot.x - (C.x - cur_dot.x)/ratio
     new_a_y = cur_dot.y - (C.y - cur_dot.y)/ratio
 
@@ -79,15 +77,15 @@ def get_new_a(cur_dot, C, ratio): # теперь подсчитываем зна
 
     return new_a    
 
-def get_e1(cur_dot, old_e1, B):  #находим e1              
-    e1_x = old_e1.x + (cur_dot.x - B.x)                       #параллельный перенос
+def get_e1(cur_dot, old_e1, B):  # Пересчет точек второй итерации алгоритма де Кастельжо           
+    e1_x = old_e1.x + (cur_dot.x - B.x)
     e1_y = old_e1.y + (cur_dot.y - B.y)
 
     e1 = Dot(e1_x, e1_y, "qwe", [])
 
     return e1
 
-def get_e2(cur_dot, old_e2, B):
+def get_e2(cur_dot, old_e2, B):  # Пересчет точек второй итерации алгоритма де Кастельжо     
     e2_x = old_e2.x + (cur_dot.x - B.x)
     e2_y = old_e2.y + (cur_dot.y - B.y)
 
@@ -95,14 +93,13 @@ def get_e2(cur_dot, old_e2, B):
 
     return e2  
 
-def get_c_start(start_dot, new_a, e1, t):  #ну и, наконец нахождение новых контрольных точек, далльше просто строишь
-    v_x = new_a.x + (e1.x - new_a.x)/(1-t)   #кривую по ним и точкам начала и конца
+def get_c_start(start_dot, new_a, e1, t):  # Пересчёт координат точек-рычагов
+    v_x = new_a.x + (e1.x - new_a.x)/(1-t) 
     v_y = new_a.y + (e1.y - new_a.y)/(1-t)
 
     v = Dot(v_x, v_y, "qwe", [])
 
     control_start_x = start_dot.x + (v.x - start_dot.x)/t 
-    # control_start_x = start_dot.x + (v.x - start_dot.x)/t 
     control_start_y = start_dot.y + (v.y - start_dot.y)/t
 
     control_start = Dot(control_start_x, control_start_y, "lever", [])
@@ -110,7 +107,7 @@ def get_c_start(start_dot, new_a, e1, t):  #ну и, наконец нахожд
     return control_start 
 
 
-def get_c_end(end_dot, new_a, e2, t):
+def get_c_end(end_dot, new_a, e2, t):  # Пересчёт координат точек-рычагов
     v_x = new_a.x + (e2.x - new_a.x)/t
     v_y = new_a.y + (e2.y - new_a.y)/t
 
@@ -124,7 +121,7 @@ def get_c_end(end_dot, new_a, e2, t):
     return control_end
 
 
-def get_k(start_dot, control_start, t):
+def get_k(start_dot, control_start, t):   # Вычисление точек второй итерации алгоритма де Кастельжо для визуализации
     k_x = start_dot.x + (control_start.x - start_dot.x)*t
     k_y = start_dot.y + (control_start.y - start_dot.y)*t
 
@@ -132,7 +129,7 @@ def get_k(start_dot, control_start, t):
 
     return k
 
-def get_j(control_start, control_end, t):
+def get_j(control_start, control_end, t):  # Вычисление точек второй итерации алгоритма де Кастельжо для визуализации
 
     j_x = control_start.x + (control_end.x - control_start.x)*t #_!
     j_y = control_start.y + (control_end.y - control_start.y)*t #_!
@@ -141,44 +138,26 @@ def get_j(control_start, control_end, t):
 
     return j
 
-def get_l(end_dot, control_end, t): #_!
+def get_l(end_dot, control_end, t):  # Вычисление точек второй итерации алгоритма де Кастельжо для визуализации
     l_x = control_end.x + (end_dot.x - control_end.x)*t
     l_y = control_end.y + (end_dot.y - control_end.y)*t
 
     l = Dot(l_x, l_y, "qwe", [])
 
-    return l  
+    return l 
 
-# def line_intersection(line1, line2):
-#     xdiff = (line1[0][0] - line1[1][0], line2[0][0] - line2[1][0])
-#     ydiff = (line1[0][1] - line1[1][1], line2[0][1] - line2[1][1])
-
-#     def det(a, b):
-#         return a[0] * b[1] - a[1] * b[0]
-
-#     div = det(xdiff, ydiff)
-#     if div == 0:
-#         print("here")
-#         return False
-#     else:   
-#         d = (det(*line1), det(*line2))
-#         x = det(d, xdiff) / div
-#         y = det(d, ydiff) / div
-        
-#         return True    
-
-class Point:
+class Point:  # Класс для локальных нужд
     def __init__(self,x,y):
         self.x = x
         self.y = y
 
-def ccw(A,B,C):
+def ccw(A,B,C):  # Служебная функция
     return (C.y-A.y)*(B.x-A.x) > (B.y-A.y)*(C.x-A.x)
 
-def line_intersection(A,B,C,D):
+def line_intersection(A,B,C,D):  # Проверка пересечения двух отрезков
     return ccw(A,C,D) != ccw(B,C,D) and ccw(A,B,C) != ccw(A,B,D)
 
-def point_sort_to_poligon(p1, p2, p3, p4):
+def point_sort_to_poligon(p1, p2, p3, p4):  # создание выпуклого четырехуголика из набора точек
     poligon = []
     a = Point(p1[0], p1[1])
     b = Point(p2[0], p2[1])
@@ -205,7 +184,7 @@ def point_sort_to_poligon(p1, p2, p3, p4):
     
     return poligon
 
-def calculateLever(b1, b2):
+def calculateLever(b1, b2):  # 
     mid = ((b1.x + b2.x)/2, (b1.y + b2.y)/2)
     coords = (mid[0], mid[1])
     return Dot(coords[0], coords[1], "lever", [])
@@ -213,7 +192,7 @@ def calculateLever(b1, b2):
 # determine if a point is inside a given polygon or not
 # Polygon is a list of (x,y) pairs.
 
-def point_inside_polygon(x, y, poly):
+def point_inside_polygon(x, y, poly):  # Определение попадения точки в четырехугольник
 
     n = len(poly)
     inside = False

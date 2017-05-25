@@ -55,11 +55,11 @@ class Curve:
 
 	def draw(self, bg):
 		for bdot in self.base_dots:
-			pygame.draw.rect(bg, pygame.Color("#000000"), bdot.rect, 2)
+			pygame.draw.rect(bg, pygame.Color("#ff0000"), bdot.rect, 2)
 		# if self.lever_visibility:
 		for lever in self.levers:
-			pygame.draw.rect(bg, pygame.Color("#000000"), lever.rect, 1)
-			pygame.draw.line(bg, pygame.Color("#000000"), (lever.x, lever.y), (self.base_dots[self.levers.index(lever)].x, self.base_dots[self.levers.index(lever)].y), 1)
+			pygame.draw.rect(bg, pygame.Color("#ff0000"), lever.rect, 1)
+			pygame.draw.line(bg, pygame.Color("#101010"), (lever.x, lever.y), (self.base_dots[self.levers.index(lever)].x, self.base_dots[self.levers.index(lever)].y), 1)
 
 		for dot in self.dots:
 			pygame.draw.rect(bg, pygame.Color("#000000"), dot.rect, 1)
@@ -95,7 +95,7 @@ class Curve:
 
 		return Dot(p[0], p[1], False, self)
 
-	def draw_algo(self, img, dragged_dot):
+	def draw_algo(self, img, dragged_dot):  # Отрисовка алгоритма де Кастельжо
 		pygame.draw.line(img, pygame.Color("#ff0000"), (self.a.x, self.a.y), (dragged_dot.x, dragged_dot.y))
 		pygame.draw.line(img, pygame.Color("#00ff00"), (dragged_dot.x, dragged_dot.y), (self.c.x, self.c.y))
 
@@ -107,7 +107,7 @@ class Curve:
 		pygame.draw.line(img, pygame.Color("#00ffff"), (self.base_dots[1].x, self.base_dots[1].y), (self.base_dots[0].x, self.base_dots[0].y))
 		pygame.draw.line(img, pygame.Color("#00ffff"), (self.levers[1].x, self.levers[1].y), (self.levers[0].x, self.levers[0].y))
 
-	def get_old_id(self, dot):
+	def get_old_id(self, dot):	# Функция-контейнер для подсчета 
 		self.b = get_B(dot)
 		self.t = get_t(dot)
 		self.c = get_c(self.base_dots[0], self.base_dots[-1], self.t)
