@@ -106,3 +106,24 @@ class Curve:
 
 		pygame.draw.line(img, pygame.Color("#00ffff"), (self.base_dots[1].x, self.base_dots[1].y), (self.base_dots[0].x, self.base_dots[0].y))
 		pygame.draw.line(img, pygame.Color("#00ffff"), (self.levers[1].x, self.levers[1].y), (self.levers[0].x, self.levers[0].y))
+
+	def get_old_id(self, dot):
+		self.b = get_B(dot)
+		self.t = get_t(dot)
+		self.c = get_c(self.base_dots[0], self.base_dots[-1], self.t)
+		self.ratio = ratio_t(self.t)
+		self.a = get_a(self.b,self.c,self.ratio)
+		self.old_e1 = get_old_e1(self.base_dots[0], self.levers[0], self.levers[-1], self.t)
+		self.old_e2 = get_old_e2(self.base_dots[-1], self.levers[-1], self.levers[0], self.t)
+		self.e1 = get_old_e1(self.base_dots[0], self.levers[0], self.levers[-1], self.t)
+		self.e2 = get_old_e2(self.base_dots[-1], self.levers[-1], self.levers[0], self.t)		
+
+	def get_new_id(self, dragged_dot):
+		self.a = get_new_a(dragged_dot,self.c,self.ratio)
+		self.e1 = get_e1(dragged_dot,self.old_e1, self.b)
+		self.e2 = get_e2(dragged_dot,self.old_e2, self.b)
+		self.levers[0] = get_c_start(self.base_dots[0], self.a, self.e1, self.t)
+		self.levers[-1] = get_c_end(self.base_dots[-1], self.a, self.e2, self.t)
+		self.k = get_k(self.base_dots[0], self.levers[0], self.t)
+		self.j = get_j(self.levers[0], self.levers[-1], self.t)
+		self.l = get_l(self.base_dots[-1], self.levers[-1], self.t)

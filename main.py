@@ -138,17 +138,9 @@ def main():
 											curve.dot_moved = dot
 
 											current_figure.dragged_curve = curve
-											curve.b = get_B(dot)
-											curve.t = get_t(dot)
-											curve.c = get_c(curve.base_dots[0], curve.base_dots[-1], curve.t)
-											curve.ratio = ratio_t(curve.t)
-											curve.a = get_a(curve.b,curve.c,curve.ratio)
 
+											curve.get_old_id(dot)
 
-											curve.old_e1 = get_old_e1(curve.base_dots[0], curve.levers[0], curve.levers[-1], curve.t)
-											curve.old_e2 = get_old_e2(curve.base_dots[-1], curve.levers[-1], curve.levers[0], curve.t)
-											curve.e1 = get_old_e1(curve.base_dots[0], curve.levers[0], curve.levers[-1], curve.t)
-											curve.e2 = get_old_e2(curve.base_dots[-1], curve.levers[-1], curve.levers[0], curve.t)
 
 
 								pygame.draw.lines(img, LINES_COLOR, True, poly)
@@ -185,26 +177,8 @@ def main():
 						curve = current_figure.dragged_curve
 						if curve != None:
 
-							curve.a = get_new_a(dragged_dot,curve.c,curve.ratio)
-							curve.e1 = get_e1(dragged_dot,curve.old_e1, curve.b)
-							curve.e2 = get_e2(dragged_dot,curve.old_e2, curve.b)
-							curve.levers[0] = get_c_start(curve.base_dots[0], curve.a, curve.e1, curve.t)
-							curve.levers[-1] = get_c_end(curve.base_dots[-1], curve.a, curve.e2, curve.t)
-
-							curve.k = get_k(curve.base_dots[0], curve.levers[0], curve.t)
-							curve.j = get_j(curve.levers[0], curve.levers[-1], curve.t)
-							curve.l = get_l(curve.base_dots[-1], curve.levers[-1], curve.t)
-
-
+							curve.get_new_id(dragged_dot)
 							curve.draw_algo(img, dragged_dot)
-
-							# pygame.draw.line(img, pygame.Color("#ff0000"), (curve.a.x, curve.a.y), (dragged_dot.x, dragged_dot.y))
-							# pygame.draw.line(img, pygame.Color("#00ff00"), (dragged_dot.x, dragged_dot.y), (curve.c.x, curve.c.y))
-
-							# pygame.draw.line(img, pygame.Color("#0000ff"), (curve.e1.x, curve.e1.y), (curve.e2.x, curve.e2.y))
-
-							# pygame.draw.line(img, pygame.Color("#ff00ff"), (curve.k.x, curve.k.y), (curve.a.x, curve.a.y))
-							# pygame.draw.line(img, pygame.Color("#ff00ff"), (curve.a.x, curve.a.y), (curve.l.x, curve.l.y))
 
 		for f in figures:
 			for c in f.curves:
@@ -223,32 +197,7 @@ def main():
 
 	pygame.quit()
 
-def calculateLever(b1, b2):
-	mid = ((b1.x + b2.x)/2, (b1.y + b2.y)/2)
-	coords = (mid[0], mid[1])
-	return Dot(coords[0], coords[1], "lever", [])
 
-# determine if a point is inside a given polygon or not
-# Polygon is a list of (x,y) pairs.
-
-def point_inside_polygon(x, y, poly):
-
-    n = len(poly)
-    inside = False
-
-    p1x,p1y = poly[0]
-    for i in range(n + 1):
-        p2x,p2y = poly[i % n]
-        if y > min(p1y, p2y):
-            if y <= max(p1y, p2y):
-                if x <= max(p1x, p2x):
-                    if p1y != p2y:
-                        xinters = (y - p1y) * (p2x - p1x) / (p2y - p1y) + p1x
-                    if p1x == p2x or x <= xinters:
-                        inside = not inside
-        p1x,p1y = p2x,p2y
-
-    return inside
 
 
 
