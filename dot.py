@@ -10,10 +10,10 @@ class Dot:
 		self.y = top
 
 		if self.type == "base" or self.type == "lever":
-			self.rect = Rect(self.x, self.y, 10, 10)
+			self.rect = Rect((self.x-5), (self.y-5), 10, 10)
 		else:
-			self.rect = Rect(self.x, self.y, 1, 1)
-			self.inv_rect = Rect(self.x, self.y, 5, 5)
+			self.rect = Rect((self.x-0.5), (self.y), 1, 1)
+			self.inv_rect = Rect((self.x-5), (self.y), 5, 5)
 
 		self.update()
 
@@ -21,10 +21,10 @@ class Dot:
 
 	def update(self):
 		if self.type == "base" or self.type == "lever":
-			self.rect = Rect(self.x, self.y, 10, 10)
+			self.rect = Rect((self.x-5), (self.y-5), 10, 10)
 		else:
-			self.rect = Rect(self.x, self.y, 1, 1)
-			self.inv_rect = Rect(self.x, self.y, 5, 5)
+			self.rect = Rect((self.x-0.5), (self.y), 1, 1)
+			self.inv_rect = Rect((self.x-2.5), (self.y), 5, 5)
 
 	def __str__(self):
 		res = str(self.rect.x) + " "
