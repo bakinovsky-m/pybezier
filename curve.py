@@ -94,3 +94,15 @@ class Curve:
 		p[1] += self.base_dots[1].y * ttt
 
 		return Dot(p[0], p[1], False, self)
+
+	def draw_algo(self, img, dragged_dot):
+		pygame.draw.line(img, pygame.Color("#ff0000"), (self.a.x, self.a.y), (dragged_dot.x, dragged_dot.y))
+		pygame.draw.line(img, pygame.Color("#00ff00"), (dragged_dot.x, dragged_dot.y), (self.c.x, self.c.y))
+
+		pygame.draw.line(img, pygame.Color("#0000ff"), (self.e1.x, self.e1.y), (self.e2.x, self.e2.y))
+
+		pygame.draw.line(img, pygame.Color("#ff00ff"), (self.k.x, self.k.y), (self.a.x, self.a.y))
+		pygame.draw.line(img, pygame.Color("#ff00ff"), (self.a.x, self.a.y), (self.l.x, self.l.y))
+
+		pygame.draw.line(img, pygame.Color("#00ffff"), (self.base_dots[1].x, self.base_dots[1].y), (self.base_dots[0].x, self.base_dots[0].y))
+		pygame.draw.line(img, pygame.Color("#00ffff"), (self.levers[1].x, self.levers[1].y), (self.levers[0].x, self.levers[0].y))
